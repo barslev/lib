@@ -19,7 +19,8 @@
 
 <br >
 
-A schematics that wraps the Angular generate library schematics and provides all the standard boilerplate you need to create a neat Angular open-source project.
+Schematics that wrap the Angular generate library schematics and provide all the standard boilerplate you need in order to create a neat Angular open-source project.
+
 
 ## Usage
 
@@ -27,7 +28,7 @@ A schematics that wraps the Angular generate library schematics and provides all
 ng add @ngneat/lib @scope/toaster
 ```
 
-Let's break it down and see what was created for you.
+Several files were created. Let's go over them:
 
 ### Files
 
@@ -44,23 +45,24 @@ Let's break it down and see what was created for you.
 
 ### Scripts
 
-- `build:lib` - Build the library
-- `test:lib` - Run tests
-- `test:lib:headless` - Run tests in headless mode with Chrome
-- `release` - Release a new version. This will bump the library's version, and update the `CHANGE_LOG` file based on the commit message
-- `release:first` - Create the first release
-- `commit` - Create a new commit message based on Angular commit messgae convention
-- `contributors:add` - Add a new contributor to the `README` file
+- `build:lib` - Builds the library
+- `test:lib` - Runs tests
+- `test:lib:headless` - Runs tests in headless mode with Chrome
+- `release` - Releases a new version. This will bump the library's version, and update the `CHANGE_LOG` file based on the commit message
+- `release:first` - Creates the first release
+- `commit` - Creates a new commit message based on Angular commit messgae convention
+- `contributors:add` - Adds a new contributor to the `README` file
 
 ### Hooks
 
-- `pre-commit`: Runs prettier on the staged files, and verifies that they don't contain `debugger`, `fit`, or `describe`
+- `pre-commit`: Runs prettier on the staged files, and verifies that they don't contain `debugger`, `fit`, or `fdescribe`
 - `pre-push`: Runs the `test:lib:headless` command
 
 ### Extras
 
-- It updates the `tsconfig.json` file so that you can import everything from `@scope/name` in the playground.
-- It fulfills the library's `package.json` with the information it needs. Make sure you update the relevant data.
+- Running the `add` command  updates the `tsconfig.json` file so that you can import any files from the npm path (`@scope/name`) rather than from relative paths.
+
+- It also populates the library's `package.json` with the initial required information. Make sure you verify the data is accurate before proceeding.
  
 ## Basic Working Flow
 
@@ -74,7 +76,7 @@ Let's break it down and see what was created for you.
 
 ## Skipping the Library Creation
 
-The command provides the `--skip-lib` flag for cases where we want to generate everything but the library.
+The schematics provide the --skip-lib flag for cases where we want to generate everything except the library.
 
 ## Contributors ✨
 
