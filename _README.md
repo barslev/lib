@@ -1,0 +1,89 @@
+<p align="center">
+ <img width="20%" height="20%" src="./logo.svg">
+</p>
+
+<br />
+
+[![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?style=flat-square)]()
+[![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)]()
+[![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
+[![ngneat](https://img.shields.io/badge/@-ngneat-383636?style=flat-square&labelColor=8f68d4)](https://github.com/ngneat/)
+
+> Lets you focus on the stuff that matters
+
+A schematics that wraps the Angular generate library schematics and provides all the standard boilerplate you need to create a neat Angular open-source project.
+
+## Usage
+
+```
+ng add @ngneat/lib @scope/toaster
+```
+
+Let's break it down and see what was created for you. It creates the following files:
+
+- CODE_OF_CONDUCT.md
+- CONTRIBUTING.md
+- ISSUE_TEMPLATE.md
+- LICENSE
+- PULL_REQUEST_TEMPLATE.md
+- README
+
+It adds the following tools:
+
+[Prettier](https://prettier.io/), [Commitizen](https://github.com/commitizen/cz-cli), [Standard Version](https://github.com/conventional-changelog/standard-version), [Travis](https://travis-ci.org/), [Spectator](https://github.com/ngneat/spectator), [All Contributors](https://allcontributors.org/)
+
+It adds the following scripts:
+
+- `build:lib` - Build the library
+- `test:lib` - Run tests
+- `test:lib:headless` - Run tests in headless mode with Chrome
+- `release` - Release a new version. This will bump the library's version, and update the `CHANGE_LOG` file based on the commit message
+- `release:first` - Create the first release
+- `commit` - Create a new commit message based on Angular commit messgae convention
+- `contributors:add` - Add a new contributor to the `README` file
+
+It adds the following hooks:
+
+- `pre-commit`: Runs prettier on the staged files, and verifies that they don't contain `debugger`, `fit`, or `describe`
+- `pre-push`: Runs the `test:lib:headless` command
+
+<hr >
+
+It updates the `tsconfig.json` file so that you can import everything from `@scope/name` in the playground.
+
+## Basic Working Flow
+
+1. Develop
+2. Write specs
+3. Run `npm run test:lib`,
+4. Run `npm run commit`, and choose `fix` or `feature`
+5. Run `npm run release`
+6. Run `npm run build:lib`
+7. Go to the `dist` directory, and run `npm publish`
+
+## Skip the lib
+
+The command provides the `--skip-lib` flag for cases where we want to generate everything but the library.
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://github.com/itayod"><img src="https://avatars2.githubusercontent.com/u/6719615?v=4" width="100px;" alt=""/><br /><sub><b>Itay Oded</b></sub></a><br /><a href="https://github.com/@ngneat/lib/commits?author=itayod" title="Code">💻</a></td>
+    <td align="center"><a href="https://www.netbasal.com"><img src="https://avatars1.githubusercontent.com/u/6745730?v=4" width="100px;" alt=""/><br /><sub><b>Netanel Basal</b></sub></a><br /><a href="https://github.com/@ngneat/lib/commits?author=NetanelBasal" title="Documentation">📖</a> <a href="#ideas-NetanelBasal" title="Ideas, Planning, & Feedback">🤔</a> <a href="#projectManagement-NetanelBasal" title="Project Management">📆</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-enable -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
