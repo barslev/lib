@@ -13,6 +13,12 @@
 
 > Lets you focus on the stuff that matters
 
+<br >
+
+![Demo](demo.gif)
+
+<br >
+
 A schematics that wraps the Angular generate library schematics and provides all the standard boilerplate you need to create a neat Angular open-source project.
 
 ## Usage
@@ -21,20 +27,22 @@ A schematics that wraps the Angular generate library schematics and provides all
 ng add @ngneat/lib @scope/toaster
 ```
 
-Let's break it down and see what was created for you. It creates the following files:
+Let's break it down and see what was created for you.
+
+### Files
 
 - CODE_OF_CONDUCT.md
 - CONTRIBUTING.md
 - ISSUE_TEMPLATE.md
-- LICENSE
+- LICENSE.md
 - PULL_REQUEST_TEMPLATE.md
-- README
+- README.md
 
-It adds the following tools:
+### Tools
 
 [Prettier](https://prettier.io/), [Commitizen](https://github.com/commitizen/cz-cli), [Standard Version](https://github.com/conventional-changelog/standard-version), [Travis](https://travis-ci.org/), [Spectator](https://github.com/ngneat/spectator), [All Contributors](https://allcontributors.org/)
 
-It adds the following scripts:
+### Scripts
 
 - `build:lib` - Build the library
 - `test:lib` - Run tests
@@ -44,15 +52,16 @@ It adds the following scripts:
 - `commit` - Create a new commit message based on Angular commit messgae convention
 - `contributors:add` - Add a new contributor to the `README` file
 
-It adds the following hooks:
+### Hooks
 
 - `pre-commit`: Runs prettier on the staged files, and verifies that they don't contain `debugger`, `fit`, or `describe`
 - `pre-push`: Runs the `test:lib:headless` command
 
-<hr >
+### Extras
 
-It updates the `tsconfig.json` file so that you can import everything from `@scope/name` in the playground.
-
+- It updates the `tsconfig.json` file so that you can import everything from `@scope/name` in the playground.
+- It fulfills the library's `package.json` with the information it needs. Make sure you update the relevant data.
+ 
 ## Basic Working Flow
 
 1. Develop
@@ -63,7 +72,7 @@ It updates the `tsconfig.json` file so that you can import everything from `@sco
 6. Run `npm run build:lib`
 7. Go to the `dist` directory, and run `npm publish`
 
-## Skip the lib
+## Skipping the Library Creation
 
 The command provides the `--skip-lib` flag for cases where we want to generate everything but the library.
 

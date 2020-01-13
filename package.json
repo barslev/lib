@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A schematics command that create an angular library with open source boilerplate.",
   "scripts": {
-    "linkAndStart": "npm link & tsc -p tsconfig.json --watch",
+    "link:start": "npm link & tsc -p tsconfig.json --watch",
     "start": "tsc -p tsconfig.json --watch",
     "build": "tsc -p tsconfig.json",
     "test": "npm run build && jest --watch",
