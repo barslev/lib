@@ -2,6 +2,8 @@
  <img width="20%" height="20%" src="./logo.svg">
 </p>
 
+> Lets you focus on the stuff that matters
+
 <br />
 
 [![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?style=flat-square)]()
@@ -11,7 +13,7 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
 [![ngneat](https://img.shields.io/badge/@-ngneat-383636?style=flat-square&labelColor=8f68d4)](https://github.com/ngneat/)
 
-> Lets you focus on the stuff that matters
+
 
 <br >
 
