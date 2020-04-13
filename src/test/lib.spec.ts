@@ -123,7 +123,7 @@ describe('lib', () => {
 
   });
 
-  fdescribe('with scope in name', () => {
+  describe('with scope in name', () => {
     let json;
     let tree;
     options = {...options, name: `@ngneat/${options.name}`};
@@ -156,6 +156,28 @@ describe('lib', () => {
       const tree = await runner.runSchematicAsync('lib', options, appTree).toPromise();
       const content = tree.readContent(`.travis.yml`);
       expect(content).toMatchSnapshot();
+    });
+
+  });
+
+  describe('Skip Lib', () => {
+    let tree;
+
+    beforeEach( async () => {
+      const runner = new SchematicTestRunner('schematics', collectionPath);
+      tree = await runner.runSchematicAsync('lib', {...options, skipLib: true}, appTree).toPromise();
+    });
+
+    it('should has test:headless script', () => {
+      const json = JSON.parse(tree.readContent(`package.json`));
+
+      expect(json.scripts['test:headless']).toBeTruthy();
+    });
+
+    it('should call test:headless on pre-push hook', () => {
+      const json = JSON.parse(tree.readContent(`package.json`));
+
+      expect((json.husky.hooks['pre-push'] as string).includes('test:headless')).toBeTruthy();
     });
 
   });

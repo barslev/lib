@@ -29,13 +29,16 @@ function scriptsToAdd(libPath: string, libName: string, skipLib: boolean) {
   };
 }
 
-const husky = {
-  hooks: {
-    'commit-msg': 'commitlint -e $GIT_PARAMS',
-    'pre-commit': 'npm run hooks:pre-commit && lint-staged',
-    'pre-push': 'npm run test:headless'
+function generateHooks(skipLib: boolean) {
+  const testHeadlessKey = skipLib ? 'test:headless' : 'test:lib:headless';
+  return {
+    hooks: {
+      'commit-msg': 'commitlint -e $GIT_PARAMS',
+      'pre-commit': 'npm run hooks:pre-commit && lint-staged',
+      'pre-push': `npm run ${testHeadlessKey}`
+    }
   }
-};
+}
 
 const config = {
   commitizen: {
@@ -50,12 +53,13 @@ const lintStaged = {
 export function updatePackageJson(host: Tree, libPath: string, libName: string, options: Schema) {
   const json = getPackageJson(host);
 
+  json['config'] = config;
+  json['lint-staged'] = lintStaged;
   json['scripts'] = {
     ...json.scripts,
     ...scriptsToAdd(libPath, libName, options.skipLib)
   };
-  json['husky'] = husky;
-  json['config'] = config;
-  json['lint-staged'] = lintStaged;
+  json['husky'] = generateHooks(options.skipLib);
+
   setPackageJson(host, json);
 }
