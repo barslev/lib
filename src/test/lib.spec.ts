@@ -12,10 +12,10 @@ describe('lib', () => {
   let options: Schema;
   let appTree: UnitTestTree;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     options = { name: 'transloco', ci: 'travis' };
     spyOn(fromDevkit, 'externalSchematic').and.returnValue(noop);
-    appTree = createWorkspace(schematicRunner, appTree);
+    appTree = await createWorkspace(schematicRunner, appTree);
   });
 
   describe('package.json', () => {

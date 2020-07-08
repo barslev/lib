@@ -1,4 +1,4 @@
-import { WorkspaceSchema } from '@angular-devkit/core/src/workspace';
+import { WorkspaceSchema } from '@schematics/angular/utility/workspace-models';
 import { SchematicsException, Tree } from '@angular-devkit/schematics';
 
 export function getWorkspacePath(host: Tree): string {

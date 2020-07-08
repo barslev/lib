@@ -15,11 +15,9 @@ export function createWorkspace(
     appTree: UnitTestTree,
     workspaceOptions = defaultWorkspaceOptions,
 ) {
-  appTree = schematicRunner.runExternalSchematic(
+  return schematicRunner.runExternalSchematicAsync(
       '@schematics/angular',
       'workspace',
       workspaceOptions
-  );
-
-  return appTree;
+  ).toPromise();
 }

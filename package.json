@@ -38,16 +38,16 @@
   "license": "MIT",
   "schematics": "./src/collection.json",
   "dependencies": {
-    "@angular-devkit/core": "^0.7.5",
-    "@angular-devkit/schematics": "^0.7.5",
-    "@schematics/angular": "^8.3.20",
+    "@angular-devkit/core": "^10.0.1",
+    "@angular-devkit/schematics": "^10.0.1",
+    "@schematics/angular": "^10.0.1",
     "@ngneat/spectator": "^4.10.1",
     "@types/jest": "^24.0.23",
     "@types/node": "^8.0.31",
     "jest": "^24.9.0",
     "ts-jest": "^24.2.0",
     "rxjs": "^6.5.3",
-    "typescript": "^2.5.2"
+    "typescript": "^3.9.6"
   },
   "husky": {
     "hooks": {
