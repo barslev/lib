@@ -1,11 +1,23 @@
-import { externalSchematic, Tree, SchematicContext, Rule, chain } from '@angular-devkit/schematics';
-import { Schema as ComponentSchema } from '@schematics/angular/component/schema';
+import {externalSchematic, Tree, SchematicContext, Rule, chain} from '@angular-devkit/schematics';
+import {Schema as ComponentSchema} from '@schematics/angular/component/schema';
+import * as fs from 'fs';
 import * as path from 'path';
-import { Observable, of } from 'rxjs';
-import { tap, switchMap, map } from 'rxjs/operators';
-import { getJSON, setJSON, getJSONFromFS, readFile, writeFile } from '../utils/files';
-import { observify, isFunction } from '../utils/helpers';
-import { Schema } from './schema';
+import {Observable, of} from 'rxjs';
+import {tap, switchMap, map} from 'rxjs/operators';
+import {getJSON, setJSON, readFile, writeFile, readFileFromFS} from '../utils/files';
+import {observify, isFunction} from '../utils/helpers';
+import {Schema} from './schema';
+
+function resolveTSConfig() {
+  // if Angular's version is 10+ we need to update tsconfig.base.json
+  const tsConfigPath = fs.existsSync('tsconfig.base.json') ? 'tsconfig.base.json' : 'tsconfig.json';
+  // take tsConfig from the fs because we do not need angular's changes.
+  let sourceText = readFileFromFS(tsConfigPath);
+  // clean comments from file.
+  sourceText = sourceText.replace(/\/\*.+?\*\/|\/\/.*(?=[\n\r])/g, '');
+
+  return { path: tsConfigPath, json: JSON.parse(sourceText) };
+}
 
 function toTree(ruleOrTree: Rule | any, tree: Tree, context: SchematicContext): Tree {
   return isFunction(ruleOrTree) ? ruleOrTree(tree, context) : (ruleOrTree as any);
@@ -44,16 +56,13 @@ function addSpectator(options: Schema, tree: Tree, context: SchematicContext, sc
 }
 
 function updateTsConfig(host: Tree, name: string, libPath: string): Tree {
-  const tsConfigPath = 'tsconfig.json';
-  // take tsConfig from the fs because we do not need angular's changes.
-  const tsConfig = getJSONFromFS(tsConfigPath);
+  const tsConfig = resolveTSConfig();
   const paths = {
     [name]: [`${libPath}/src/public-api.ts`]
   };
+  tsConfig.json.compilerOptions.paths = { ...tsConfig.json.compilerOptions.paths, ...paths };
 
-  tsConfig.compilerOptions.paths = { ...tsConfig.compilerOptions.paths, ...paths };
-
-  return setJSON(host, tsConfigPath, tsConfig);
+  return setJSON(host, tsConfig.path, tsConfig);
 }
 
 function updateKarmaConfig(host: Tree, libPath: string): Tree {

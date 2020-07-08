@@ -2,6 +2,7 @@ import {SchematicContext, Tree} from '@angular-devkit/schematics';
 import {NodePackageInstallTask} from '@angular-devkit/schematics/tasks';
 import {addPackageToPackageJsonFactory} from '../utils/package';
 import { Schema } from './schema';
+const { execSync } = require('child_process');
 
 const deps = [
   {
@@ -30,7 +31,7 @@ const deps = [
   },
   {
     name: 'prettier',
-    version: '^1.18.2'
+    version: '^2.0.5'
   },
   {
     name: 'standard-version',
@@ -49,10 +50,8 @@ const deps = [
 export function installDependencies(host: Tree, context: SchematicContext, options: Schema) {
   const addPackageToPackageJson = addPackageToPackageJsonFactory(host, 'devDependencies');
   if(!options.skipLib) {
-    deps.push({
-      name: '@ngneat/spectator',
-      version: '^4.11.1'
-    });
+    // install spectator synchronously so we can use it for external schematics command later on.
+    execSync('npm install --save-dev @ngneat/spectator');
   }
   deps.forEach(dep => {
     addPackageToPackageJson(dep.name, dep.version);

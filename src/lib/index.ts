@@ -7,9 +7,10 @@ import {Schema} from './schema';
 import {updatePackageJson} from './update-package-json';
 
 function rulify(obj: Tree | Observable<Tree> | Rule | null): Rule {
-  return (tree: Tree, context: SchematicContext) => {
+  const rule = (tree: Tree, context: SchematicContext) => {
     return typeof obj === 'function' ? obj(tree, context) : obj;
   }
+  return rule as Rule;
 }
 
 function getLibPath(scopeWithName: string) {
