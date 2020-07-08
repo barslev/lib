@@ -52,6 +52,10 @@ export function installDependencies(host: Tree, context: SchematicContext, optio
   if(!options.skipLib) {
     // install spectator synchronously so we can use it for external schematics command later on.
     execSync('npm install --save-dev @ngneat/spectator');
+    deps.push({
+      name: '@ngneat/spectator',
+      version: 'latest'
+    });
   }
   deps.forEach(dep => {
     addPackageToPackageJson(dep.name, dep.version);
