@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.4](https://github.com/ngneat/lib/compare/v1.0.3...v1.0.4) (2020-07-11)
+
+
+### Bug Fixes
+
+* 🐛 fix angular v10 tsconfig.base file ([c6db9c3](https://github.com/ngneat/lib/commit/c6db9c315e5b235250d5557bb362bdf150d17dd0))
+
 ### [1.0.3](https://github.com/ngneat/lib/compare/v1.0.2...v1.0.3) (2020-07-08)
 
 
