@@ -62,7 +62,7 @@ function updateTsConfig(host: Tree, name: string, libPath: string): Tree {
   };
   tsConfig.json.compilerOptions.paths = { ...tsConfig.json.compilerOptions.paths, ...paths };
 
-  return setJSON(host, tsConfig.path, tsConfig);
+  return setJSON(host, tsConfig.path, tsConfig.json);
 }
 
 function updateKarmaConfig(host: Tree, libPath: string): Tree {
