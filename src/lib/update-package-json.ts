@@ -34,7 +34,7 @@ function generateHooks(skipLib: boolean) {
   const testHeadlessKey = skipLib ? 'test:headless' : 'test:lib:headless';
   return {
     hooks: {
-      'commit-msg': 'commitlint -e $HUSKY_GIT_PARAMS',
+      'commit-msg': 'commitlint $HUSKY_GIT_PARAMS',
       'pre-commit': 'npm run hooks:pre-commit && lint-staged',
       'pre-push': `npm run ${testHeadlessKey}`
     }
