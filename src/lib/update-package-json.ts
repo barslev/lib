@@ -1,4 +1,5 @@
 import { Tree } from '@angular-devkit/schematics';
+
 import { getPackageJson, setPackageJson } from '../utils/package';
 import { Schema } from './schema';
 
@@ -33,11 +34,11 @@ function generateHooks(skipLib: boolean) {
   const testHeadlessKey = skipLib ? 'test:headless' : 'test:lib:headless';
   return {
     hooks: {
-      'commit-msg': 'commitlint -e $GIT_PARAMS',
+      'commit-msg': 'commitlint -e $HUSKY_GIT_PARAMS',
       'pre-commit': 'npm run hooks:pre-commit && lint-staged',
       'pre-push': `npm run ${testHeadlessKey}`
     }
-  }
+  };
 }
 
 const config = {
