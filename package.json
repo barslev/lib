@@ -1,6 +1,6 @@
 {
   "name": "@ngneat/lib",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "A schematics command that create an angular library with open source boilerplate.",
   "scripts": {
     "link:start": "npm link & tsc -p tsconfig.json --watch",
