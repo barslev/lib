@@ -29,6 +29,15 @@
         "ideas",
         "projectManagement"
       ]
+    },
+    {
+      "login": "Steven-Harris",
+      "name": "Steven Harris",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/7720242?v=4",
+      "profile": "https://stevenharris.dev",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

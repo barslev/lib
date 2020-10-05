@@ -340,7 +340,7 @@ Object {
 exports[`lib package.json should add husky 1`] = `
 Object {
   "hooks": Object {
-    "commit-msg": "commitlint -e $GIT_PARAMS",
+    "commit-msg": "commitlint $HUSKY_GIT_PARAMS",
     "pre-commit": "npm run hooks:pre-commit && lint-staged",
     "pre-push": "npm run test:lib:headless",
   },
