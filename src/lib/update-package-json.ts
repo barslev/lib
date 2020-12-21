@@ -8,12 +8,14 @@ function scriptsToAdd(libPath: string, libName: string, skipLib: boolean) {
     .split('/')
     .map(_ => '..')
     .join('/');
+
   const basicScripts = {
     'contributors:add': 'all-contributors add',
     'hooks:pre-commit': 'node hooks/pre-commit.js',
     commit: 'git-cz',
     'release:first': 'npm run release -- --first-release'
   };
+
   if (skipLib) {
     return {
       ...basicScripts,
@@ -21,9 +23,14 @@ function scriptsToAdd(libPath: string, libName: string, skipLib: boolean) {
       'test:headless': 'cross-env CI=true npm run test'
     };
   }
+
+  const distPath = libName.replace('@', '');
+
   return {
     ...basicScripts,
-    'build:lib': `ng build ${libName}`,
+    deploy: `ng deploy --base-href=https://ngneat.github.io/libName/`,
+    copy: `cp -r README.md dist/${distPath}`,
+    'build:lib': `ng build ${libName} --prod && npm run copy`,
     'test:lib': `ng test ${libName}`,
     release: `cd ${libPath} && standard-version --infile ${depthFromRootLib}/../CHANGELOG.md`,
     'test:lib:headless': 'cross-env CI=true npm run test:lib'
@@ -31,12 +38,10 @@ function scriptsToAdd(libPath: string, libName: string, skipLib: boolean) {
 }
 
 function generateHooks(skipLib: boolean) {
-  const testHeadlessKey = skipLib ? 'test:headless' : 'test:lib:headless';
   return {
     hooks: {
-      'commit-msg': 'commitlint $HUSKY_GIT_PARAMS',
-      'pre-commit': 'npm run hooks:pre-commit && lint-staged',
-      'pre-push': `npm run ${testHeadlessKey}`
+      'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
+      'pre-commit': 'npm run hooks:pre-commit && lint-staged'
     }
   };
 }
