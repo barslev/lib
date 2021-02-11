@@ -52,16 +52,4 @@ export interface Schema {
    * When true, does not set schematics to support "ng add ..." command
    */
   skipSchematics?: boolean;
-  /**
-   * When true, will setup import mechanism for ng add support
-   */
-  importModule?: boolean;
-  /**
-   * The import statement, which will written in user's module when run through ng add. (Only works if importModule is set to true)
-   */
-  importStatement?: boolean;
-  /**
-   * Extra npm packages to be installed with ng-add.
-   */
-  packages?: string;
 }

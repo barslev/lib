@@ -1,4 +1,5 @@
-import { Rule, SchematicContext } from '@angular-devkit/schematics';
+import { virtualFs, workspaces } from '@angular-devkit/core';
+import { Rule, SchematicContext, SchematicsException } from '@angular-devkit/schematics';
 import { Tree } from '@angular-devkit/schematics/src/tree/interface';
 import { isObservable, from, of, Observable } from 'rxjs';
 
@@ -20,4 +21,25 @@ export function observify<T>(asyncOrValue: any | T): Observable<T> {
 
 export function toTree(ruleOrTree: Rule | any, tree: Tree, context: SchematicContext): Tree {
   return isFunction(ruleOrTree) ? ruleOrTree(tree, context) : (ruleOrTree as any);
+}
+
+export function createHost(tree: Tree): workspaces.WorkspaceHost {
+  return {
+    async readFile(path: string): Promise<string> {
+      const data = tree.read(path);
+      if (!data) {
+        throw new SchematicsException('File not found.');
+      }
+      return virtualFs.fileBufferToString(data);
+    },
+    async writeFile(path: string, data: string): Promise<void> {
+      return tree.overwrite(path, data);
+    },
+    async isDirectory(path: string): Promise<boolean> {
+      return !tree.exists(path) && tree.getDir(path).subfiles.length > 0;
+    },
+    async isFile(path: string): Promise<boolean> {
+      return tree.exists(path);
+    },
+  };
 }

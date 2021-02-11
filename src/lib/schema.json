@@ -71,24 +71,6 @@
       "type": "boolean",
       "default": false,
       "description": "When true, does not set schematics to support \"ng add ...\" command"
-    },
-    "importModule": {
-      "type": "boolean",
-      "default": false,
-      "description": "When true, will setup import mechanism for ng add support",
-      "x-prompt": "Do you want \"ng add\" command to import your module in client?"
-    },
-    "importStatement": {
-      "type": "string",
-      "default": "",
-      "description": "The import statement, which will written in user's module when run through ng add. (Only works if importModule is set to true)",
-      "x-prompt": "What should be the import statement?"
-    },
-    "packages": {
-      "type": "string",
-      "default": "",
-      "description": "Extra npm packages to be installed with ng-add.",
-      "x-prompt": "Do you want to add any 3rd party packages? (Comma separated values: package1:1.0.0, package2:1.0.0, ...)"
     }
   },
   "required": []

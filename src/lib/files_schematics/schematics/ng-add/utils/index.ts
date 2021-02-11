@@ -1,9 +1,25 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import * as ts from 'typescript';
-import { parseJson, JsonParseMode } from '@angular-devkit/core';
-import { SchematicsException, Tree } from '@angular-devkit/schematics';
+import { addImportToModule } from '@schematics/angular/utility/ast-utils';
+import { Change, InsertChange } from '@schematics/angular/utility/change';
+import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
+import { getProjectMainFile } from './project-main-file';
+import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import { parse } from 'jsonc-parser';
+import { Rule, SchematicContext, SchematicsException, Tree } from '@angular-devkit/schematics';
 import { WorkspaceProject, WorkspaceSchema } from '@schematics/angular/utility/workspace-models';
 
+export function installPackageJsonDependencies(): Rule {
+  return (host: Tree, context: SchematicContext) => {
+    context.addTask(new NodePackageInstallTask());
+    context.logger.log('info', `🔍 Installing packages...`);
+
+    return host;
+  };
+}
+
 export function getProjectFromWorkspace(workspace: WorkspaceSchema, projectName?: string): WorkspaceProject {
+  /* eslint-disable-next-line @typescript-eslint/no-non-null-assertion */
   const project = workspace.projects[projectName || workspace.defaultProject!];
 
   if (!project) {
@@ -54,6 +70,30 @@ export function addPackageToPackageJson(host: Tree, pkg: string, version: string
   return host;
 }
 
+export function addModuleImportToRootModule(host: Tree, moduleName: string, src: string, project: WorkspaceProject) {
+  const modulePath = getAppModulePath(host, getProjectMainFile(project));
+  addModuleImportToModule(host, modulePath, moduleName, src);
+}
+
+export function addModuleImportToModule(host: Tree, modulePath: string, moduleName: string, src: string) {
+  const moduleSource = getSourceFile(host, modulePath);
+
+  if (!moduleSource) {
+    throw new SchematicsException(`Module not found: ${modulePath}`);
+  }
+
+  const changes: Change[] = addImportToModule(moduleSource, modulePath, moduleName, src);
+  const recorder = host.beginUpdate(modulePath);
+
+  changes.forEach((change: Change) => {
+    if (change instanceof InsertChange) {
+      recorder.insertLeft(change.pos, change.toAdd);
+    }
+  });
+
+  host.commitUpdate(recorder);
+}
+
 export function getSourceFile(host: Tree, path: string) {
   const buffer = host.read(path);
   if (!buffer) {
@@ -66,7 +106,7 @@ export function getSourceFile(host: Tree, path: string) {
 
 export function getWorkspacePath(host: Tree) {
   const possibleFiles = ['/angular.json', '/.angular.json'];
-  const path = possibleFiles.filter(filePath => host.exists(filePath))[0];
+  const path = possibleFiles.filter((filePath) => host.exists(filePath))[0];
   return path;
 }
 
@@ -77,5 +117,5 @@ export function getWorkspace(host: Tree) {
     throw new SchematicsException(`Could not find (${path})`);
   }
   const content = configBuffer.toString();
-  return parseJson(content, JsonParseMode.Loose);
+  return parse(content);
 }
