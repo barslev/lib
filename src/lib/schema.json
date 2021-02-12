@@ -5,6 +5,37 @@
   "type": "object",
   "description": "Creates a new generic library project in the current workspace.",
   "long-description": "./library-long.md",
+  "definitions": {
+    "schematics_prompts": {
+      "type": "object",
+      "properties": {
+        "importModule": {
+          "type": "boolean",
+          "x-prompt": "Do you want \"ng add\" command to import your module in client?",
+          "default": true
+        },
+        "packages": {
+          "type": "string",
+          "x-prompt": "Do you want to add any 3rd party packages when run through ng add?\n(Comma separated values: package1:1.0.0, package2:1.0.0, ...)",
+          "default": ""
+        }
+      },
+      "if": {
+        "properties": {
+          "importModule": true
+        }
+      },
+      "then": {
+        "properties": {
+          "importStatement": {
+            "type": "string",
+            "x-prompt": "What should be the import statement when run through ng add? (e.g. LibModule.forRoot())",
+            "default": ""
+          }
+        }
+      }
+    }
+  },
   "properties": {
     "name": {
       "type": "string",
@@ -71,7 +102,31 @@
       "type": "boolean",
       "default": false,
       "description": "When true, does not set schematics to support \"ng add ...\" command"
+    },
+    "botName": {
+      "type": "string",
+      "default": "",
+      "description": "This name will be used while deploying on GitHub Pages",
+      "x-prompt": "What name should we use for deploying on GitHub Pages? (e.g. Mr. X's Bot)"
+    },
+    "botEmail": {
+      "type": "string",
+      "default": "",
+      "description": "This email will be used while deploying on GitHub Pages",
+      "x-prompt": "What email should we use for deploying on GitHub Pages?"
     }
   },
-  "required": []
+  "required": ["botName", "botEmail"],
+  "if": {
+    "properties": {
+      "skipSchematics": false
+    }
+  },
+  "then": {
+    "properties": {
+      "schematics_prompts": {
+        "$ref": "#/definitions/schematics_prompts"
+      }
+    }
+  }
 }

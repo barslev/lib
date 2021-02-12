@@ -1,0 +1,23 @@
+{
+  "branches": [{ "name": "main" }, { "name": "development", "prerelease": "beta" }],
+  "preset": "angular",
+  "plugins": [
+    "@semantic-release/commit-analyzer",
+    "@semantic-release/release-notes-generator",
+    "@semantic-release/changelog",
+    [
+      "@semantic-release/npm",
+      {
+        "pkgRoot": "./dist/<%= libDistPath %>",
+        "tarballDir": "dist"
+      }
+    ],
+    [
+      "@semantic-release/github",
+      {
+        "assets": ["dist/*.tgz"]
+      }
+    ],
+    "@semantic-release/git"
+  ]
+}

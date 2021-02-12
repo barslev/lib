@@ -52,4 +52,9 @@ export interface Schema {
    * When true, does not set schematics to support "ng add ..." command
    */
   skipSchematics?: boolean;
+  schematics_prompts?: {
+    importModule?: boolean;
+    packages?: string;
+    importStatement?: string;
+  };
 }
