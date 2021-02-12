@@ -15,7 +15,7 @@
         "noUnusedParameters": true,
         "noUnusedLocals": true,
         "rootDir": "schematics",
-        "outDir": "<%= depthFromRootLib %>/../../dist/ngneat/<%= libDistPath %>",
+        "outDir": "<%= depthFromRootLib %>/dist/<%= libDistPath %>",
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
         "sourceMap": true,
