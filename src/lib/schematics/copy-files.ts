@@ -1,4 +1,4 @@
-import { apply, filter, move, SchematicsException, template, url } from '@angular-devkit/schematics';
+import { apply, filter, move, SchematicsException, template, Tree, url } from '@angular-devkit/schematics';
 import { normalize, strings, workspaces } from '@angular-devkit/core';
 import { Schema } from '../schema';
 
@@ -7,8 +7,8 @@ export function copyFiles(
   options: Schema,
   importStatement: any,
   scopeWithName: string,
-  packages: any,
-  tree,
+  packages: string,
+  tree: Tree,
   project: workspaces.ProjectDefinition
 ) {
   const importModuleSet = JSON.stringify(
@@ -23,8 +23,9 @@ export function copyFiles(
       : []
   );
 
-  const packagesWithVersion = JSON.stringify(
-    packages
+  let packagesWithVersion = [];
+  if (packages) {
+    packagesWithVersion = packages
       .split(',')
       .map((i: string) => i.trim())
       .map((i: string) => {
@@ -34,8 +35,8 @@ export function copyFiles(
           );
         }
         return { name: i.split(':')[0], version: i.split(':')[1] };
-      })
-  );
+      });
+  }
 
   const depthFromRootLib = scopeWithName
     .split('/')
@@ -49,7 +50,7 @@ export function copyFiles(
       classify: strings.classify,
       scopeWithName,
       importStatement,
-      packagesWithVersion,
+      packagesWithVersion: JSON.stringify(packagesWithVersion),
       importModuleSet,
       parse: JSON.parse,
       depthFromRootLib,

@@ -13,7 +13,7 @@ export interface Schema {
   /**
    * Determine which CI tool to use.
    */
-  ci: 'circle' | 'travis';
+  ci: 'github-actions';
   /**
    * Determine which CI tool to use.
    */
@@ -22,10 +22,6 @@ export interface Schema {
    * When true, will not create the library.
    */
   skipLib?: boolean;
-  /**
-   * When true, applies lint fixes after generating the library.
-   */
-  lintFix?: boolean;
   /**
    * The name of the library.
    */
@@ -52,9 +48,4 @@ export interface Schema {
    * When true, does not set schematics to support "ng add ..." command
    */
   skipSchematics?: boolean;
-  schematics_prompts?: {
-    importModule?: boolean;
-    packages?: string;
-    importStatement?: string;
-  };
 }

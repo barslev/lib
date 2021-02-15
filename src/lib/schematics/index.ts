@@ -10,8 +10,7 @@ export function createSchematics(options: Schema, scopeWithName: string): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     installSchematicsDependencies(tree, context);
 
-    // const { importModule, importStatement, packages } = await getPrompts(options);
-    const { importModule, importStatement, packages } = options.schematics_prompts;
+    const { importModule, importStatement, packages } = await getPrompts(options);
 
     const host = createHost(tree);
     const { workspace } = await workspaces.readWorkspace('/', host);

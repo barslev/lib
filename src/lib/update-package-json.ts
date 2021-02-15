@@ -4,11 +4,6 @@ import { getPackageJson, setPackageJson } from '../utils/package';
 import { Schema } from './schema';
 
 function scriptsToAdd(libPath: string, libName: string, skipLib: boolean, skipSchematics: boolean) {
-  const depthFromRootLib = libName
-    .split('/')
-    .map((_) => '..')
-    .join('/');
-
   const basicScripts = {
     'contributors:add': 'all-contributors add',
     'hooks:pre-commit': 'node hooks/pre-commit.js',
@@ -19,22 +14,24 @@ function scriptsToAdd(libPath: string, libName: string, skipLib: boolean, skipSc
   if (skipLib) {
     return {
       ...basicScripts,
-      release: 'standard-version && npm run build',
       'test:headless': 'cross-env CI=true npm run test',
     };
   }
 
   const distPath = libName.replace('@', '');
 
+  const libsScripts = {
+    deploy: `ng deploy --base-href=https://ngneat.github.io/${libName}/`,
+    copy: `cp -r README.md dist/${distPath}`,
+    'build:lib': `ng build ${libName} --prod && npm run copy`,
+    'test:lib': `ng test ${libName}`,
+    'test:lib:headless': 'cross-env CI=true npm run test:lib',
+  };
+
   if (skipSchematics) {
     return {
       ...basicScripts,
-      deploy: `ng deploy --base-href=https://ngneat.github.io/${libName}/`,
-      copy: `cp -r README.md dist/${distPath}`,
-      'build:lib': `ng build ${libName} --prod && npm run copy`,
-      'test:lib': `ng test ${libName}`,
-      release: `cd ${libPath} && standard-version --infile ${depthFromRootLib}/../CHANGELOG.md`,
-      'test:lib:headless': 'cross-env CI=true npm run test:lib',
+      ...libsScripts,
     };
   }
 
@@ -45,13 +42,8 @@ function scriptsToAdd(libPath: string, libName: string, skipLib: boolean, skipSc
 
   return {
     ...basicScripts,
+    ...libsScripts,
     ...schematicsScripts,
-    deploy: `ng deploy --base-href=https://ngneat.github.io/libName/`,
-    copy: `cp -r README.md dist/${distPath}`,
-    'build:lib': `ng build ${libName} --prod && npm run copy`,
-    'test:lib': `ng test ${libName}`,
-    release: `cd ${libPath} && standard-version --infile ${depthFromRootLib}/../CHANGELOG.md`,
-    'test:lib:headless': 'cross-env CI=true npm run test:lib',
   };
 }
 

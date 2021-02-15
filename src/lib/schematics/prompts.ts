@@ -1,5 +1,5 @@
 import { strings } from '@angular-devkit/core';
-import prompts = require('prompts');
+import * as prompts from 'prompts';
 import { Schema } from '../schema';
 
 export async function getPrompts(options: Schema) {

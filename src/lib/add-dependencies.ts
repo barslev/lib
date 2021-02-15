@@ -34,21 +34,13 @@ const deps = [
     version: '^2.2.1',
   },
   {
-    name: 'standard-version',
-    version: '^9.0.0',
-  },
-  {
     name: 'husky',
     version: '^4.3.5',
   },
   {
     name: 'cross-env',
     version: '^7.0.3',
-  },
-  {
-    name: 'angular-cli-ghpages',
-    version: '1.0.0-rc.1',
-  },
+  }
 ];
 
 export function installDependencies(host: Tree, context: SchematicContext, options: Schema) {
