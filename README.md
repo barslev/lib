@@ -120,10 +120,10 @@ The schematics provide the --skipSchematics flag for cases where we want to gene
 
 Show that your project is based off of our lib
 
-[![ngneat-lib](https://img.shields.io/badge/made%20with-%40ngngeat%2Flib-ad1fe3?logo=angular)](https://github.com/ngneat/lib)
+[![ngneat-lib](https://img.shields.io/badge/made%20with-%40ngneat%2Flib-ad1fe3?logo=angular)](https://github.com/ngneat/lib)
 
 ```
-[![ngneat-lib](https://img.shields.io/badge/made%20with-%40ngngeat%2Flib-ad1fe3?logo=angular)](https://github.com/ngneat/lib)
+[![ngneat-lib](https://img.shields.io/badge/made%20with-%40ngneat%2Flib-ad1fe3?logo=angular)](https://github.com/ngneat/lib)
 ```
 
 ## Contributors ✨

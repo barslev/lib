@@ -7,8 +7,7 @@ function scriptsToAdd(libPath: string, libName: string, skipLib: boolean, skipSc
   const basicScripts = {
     'contributors:add': 'all-contributors add',
     'hooks:pre-commit': 'node hooks/pre-commit.js',
-    commit: 'git-cz',
-    'release:first': 'npm run release -- --first-release',
+    commit: 'git-cz'
   };
 
   if (skipLib) {
