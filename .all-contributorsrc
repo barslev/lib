@@ -38,6 +38,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "shhdharmen",
+      "name": "Dharmen Shah",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6831283?v=4",
+      "profile": "http://shhdharmen.me",
+      "contributions": [
+        "code",
+        "content",
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7
