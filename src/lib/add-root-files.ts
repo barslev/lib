@@ -14,7 +14,7 @@ import { Schema } from './schema';
 
 export function addFiles(options: Schema, scopeWithName: string, tree: Tree): Rule {
   return mergeWith(
-    apply(url(`./files`), [
+    apply(url(`./files/root`), [
       template({
         ...options,
         scopeWithName,

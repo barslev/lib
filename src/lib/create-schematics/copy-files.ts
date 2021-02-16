@@ -7,7 +7,7 @@ export function copyFiles(
   options: Schema,
   importStatement: any,
   scopeWithName: string,
-  packages: string,
+  packages: string[],
   tree: Tree,
   project: workspaces.ProjectDefinition
 ) {
@@ -24,17 +24,17 @@ export function copyFiles(
   );
 
   let packagesWithVersion = [];
-  if (packages) {
+  if (packages.length > 1) {
     packagesWithVersion = packages
-      .split(',')
       .map((i: string) => i.trim())
       .map((i: string) => {
-        if (!i.includes(':')) {
+        const lastIndex = i.lastIndexOf('@');
+        if (lastIndex < 0) {
           throw new SchematicsException(
-            `Invalid package syntax for: ${i}. Valid format is: <PACKAGE_NAME>:<PACKAGE_VERSION>`
+            `Invalid package syntax for: ${i}. Valid format is: <PACKAGE_NAME>@<PACKAGE_VERSION>`
           );
         }
-        return { name: i.split(':')[0], version: i.split(':')[1] };
+        return { name: i.substr(lastIndex + 1), version: i.substr(0, lastIndex) };
       });
   }
 
@@ -45,7 +45,7 @@ export function copyFiles(
 
   const libDistPath = scopeWithName.replace('@', '');
 
-  const templateSource = apply(url('./files_schematics'), [
+  const templateSource = apply(url('./files/schematics'), [
     template({
       classify: strings.classify,
       scopeWithName,

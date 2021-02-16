@@ -17,10 +17,12 @@ export async function getPrompts(options: Schema) {
       initial: `${strings.classify(options.name)}Module.forRoot()`,
     },
     {
-      type: 'text',
+      type: 'list',
       name: 'packages',
       message:
-        'Do you want to add any 3rd party packages when run through ng add?\n(Comma separated values: package1:1.0.0, package2:1.0.0, ...)',
+        'Do you want to add any 3rd party packages when run through ng add?\n(Comma separated values: package1@1.0.0, package2@1.0.0, ...)',
+      initial: '',
+      separator: ',',
     },
   ];
 

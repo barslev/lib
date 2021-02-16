@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { installDependencies } from './add-dependencies';
 import { addFiles } from './add-root-files';
 import { createLib } from './create-lib';
-import { createSchematics } from './schematics';
+import { createSchematics } from './create-schematics';
 import { Schema } from './schema';
 import { updatePackageJson } from './update-package-json';
 

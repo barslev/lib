@@ -15,7 +15,7 @@ import {
 import { targetBuildNotFoundError } from './utils/project-targets';
 import { hasNgModuleImport } from './utils/ng-module-imports';
 
-const importModuleSet = <%= importModuleSet %>;
+const importModuleSet: { moduleName: string; importModuleStatement: string; importPath: string }[] = <%= importModuleSet %>;
 
 export function ngAdd(options: Schema): Rule {
   return (tree: Tree) => {
@@ -48,7 +48,7 @@ function addPackageJsonDependencies(): Rule {
 function installPackageJsonDependencies(): Rule {
   return (host: Tree, context: SchematicContext) => {
     context.addTask(new NodePackageInstallTask());
-    context.logger.log('info', `🔍 Installing packages...`);
+    context.logger.log('info', '🔍 Installing packages...');
 
     return host;
   };
@@ -93,8 +93,8 @@ function injectImports(options: Schema): Rule {
           }
         }
       });
-      return host;
     }
+    return host;
   };
 }
 

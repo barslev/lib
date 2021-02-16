@@ -12,6 +12,8 @@ export function createSchematics(options: Schema, scopeWithName: string): Rule {
 
     const { importModule, importStatement, packages } = await getPrompts(options);
 
+    context.logger.info('packages : ' + packages);
+
     const host = createHost(tree);
     const { workspace } = await workspaces.readWorkspace('/', host);
 
