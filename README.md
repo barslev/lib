@@ -10,7 +10,7 @@
 [![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)]()
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
 [![ngneat](https://img.shields.io/badge/@-ngneat-383636?style=flat-square&labelColor=8f68d4)](https://github.com/ngneat/)
 
 
@@ -101,6 +101,10 @@ Several files were created. Let's go over them:
 
 - `pre-commit`: Runs prettier on the staged files, and verifies that they don't contain `debugger`, `fit`, or `fdescribe`
 - `pre-push`: Runs the `test:lib:headless` command
+
+### Versioning and Release
+
+Versioning and release is taken care by [`semantic-release`](https://github.com/semantic-release/semantic-release). Just follow commit guidelines and commit using `npm run commit` each time, and semantic-release will handle the rest.
 
 ### Extras
 
