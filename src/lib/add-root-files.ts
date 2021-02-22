@@ -9,11 +9,12 @@ import {
   MergeStrategy,
   filter,
   Tree,
+  chain,
 } from '@angular-devkit/schematics';
 import { Schema } from './schema';
 
 export function addFiles(options: Schema, scopeWithName: string, tree: Tree): Rule {
-  return mergeWith(
+  const addRootFiles = mergeWith(
     apply(url(`./files/root`), [
       template({
         ...options,
@@ -26,4 +27,19 @@ export function addFiles(options: Schema, scopeWithName: string, tree: Tree): Ru
     ]),
     MergeStrategy.Overwrite
   );
+  const addCIFiles = mergeWith(
+    apply(url(`./files/ci${options.ci === 'github-actions' ? '/github-actions' : ''}`), [
+      template({
+        ...options,
+        scopeWithName,
+        capitalize,
+        libDistPath: scopeWithName.replace('@', ''),
+      }),
+      filter((path) => !tree.exists(path)),
+      move('/'),
+    ]),
+    MergeStrategy.Overwrite
+  );
+
+  return chain([addRootFiles, addCIFiles]);
 }

@@ -43,19 +43,52 @@ Schematics that wrap the Angular generate library schematics and provide all the
 ng add @ngneat/lib @scope/toaster # change @scope/toaster with your lib name
 ```
 
+### Options
+
+| Name                    | Type                                         | Description                                                                                                                                                                                                            |
+| ----------------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `name`                  | `string`                                     | The name of the library. Valid examples: `toaster`, `@scope/toaster`<br>*Default: `argv[0]`*                                                                                                                           |
+| `scope`                 | `string`                                     | The npm scope of the library. Not needed if you are providing scope in `name` itself                                                                                                                                   |
+| `ci`                    | `enum["github-actions", "travis", "circle"]` | Determine which CI tool to use.<br>*Default: `github-actions`*                                                                                                                                                         |
+| `repositoryUrl`         | `string`                                     | The repository URL                                                                                                                                                                                                     |
+| `skipLib`               | `boolean`                                    | When true, will not create the library. Useful when you only want to add schematics in your existing library                                                                                                           |
+| `entryFile`             | `string`                                     | The path at which to create the library's public API file, relative to the workspace root.<br>*Default: `public-api`*                                                                                                  |
+| `prefix`, `p`           | `string`                                     | A prefix to apply to generated selectors.<br>*Default: `lib`*                                                                                                                                                          |
+| `skipPackageJson`       | `boolean`                                    | When true, does not add dependencies to the "package.json" file.<br>*Default: `false`*                                                                                                                                 |
+| `skipInstall`           | `boolean`                                    | When true, does not install dependency packages.<br>*Default: `false`*                                                                                                                                                 |
+| `skipTsConfig`          | `boolean`                                    | When true, does not update "tsconfig.json" to add a path mapping for the new library. The path mapping is needed to use the library in an app, but can be disabled here to simplify development.<br>*Default: `false`* |
+| `skipSchematics`        | `boolean`                                    | When true, does not set schematics to support "ng add ..." command<br>*Default: `false`*                                                                                                                               |
+| `skipAngularCliGhPages` | `boolean`                                    | When true, skips setting angular-cli-ghpages configurations<br>*Default: `false`*                                                                                                                                      |
+| `botName`               | `string`                                     | This name will be used while deploying on GitHub Pages                                                                                                                                                                 |
+| `botEmail`              | `string`                                     | This email will be used while deploying on GitHub Pages                                                                                                                                                                |
+
 ### Basic Working Flow
 
-First of all, create `NPM_TOKEN` and `GH_TOKEN` tokens for semantic-release and angular-cli-ghpages to work perfectly. Read more [here](https://semantic-release.gitbook.io/semantic-release/usage/ci-configuration#authentication-for-plugins).
+1. Create new branch
+2. Develop
+3. Write specs
+4. Run `npm run test:lib`,
+5. Run `npm run build:lib`
+6. Run `npm run commit`
+7. Push
+8. Let the CI finish running the tests
+9. Merge
 
-And then follow below steps each time:
+### Publish Flow
 
-1. Develop
-2. Write specs
-3. Run `npm run test:lib`,
-4. Run `npm run build:lib`
-5. Run `npm run commit`
-6. Push
-7. Workflows of GitHub Actions will publish on npm and make release tags
+**This is only supported with GitHub Actions.**
+
+You will need to create `NPM_TOKEN` and `GH_TOKEN` tokens for `semantic-release` and `angular-cli-ghpages` to work perfectly. Read more [here](https:/ semantic-release.gitbook.io/semantic-release/usage/ci-configuration#authentication-for-plugins) .
+
+Publish (with versioning and release) is taken care by [`semantic-release`](https://github.com/semantic-release/semantic-release). Just follow commit guidelines, commit using `npm run commit` each time and never push directly to `$default-branch` (), and semantic-release will handle the rest.
+
+There are total 3 workflows provided:
+
+| Workflow           | Runs On                                                  | Tasks                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ------------------ | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `test.yml`         | ✔️ All branches<br>❌ `$default-branch`<br>❌ `development` | ✔️ Lint<br>✔️ Build<br>✔️ Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `release-beta.yml` | ✔️ `development`                                          | ✔️ Lint<br>✔️ Build<br>✔️ Test<br>✔️ Versioning based on the [Semantic Versioning](http://semver.org/) specification.<br>✔️ Publish library on development channel<br>✔️ Make release tag on GitHub<br>✔️ Adds `released@development` label and friendly comments on issues<br>*Checkout `branches` in `.releasers.json` file in your project. It is helpful when you're pushing a breaking change and you want to do some beta testing over it, testers can install your library's beta version using this command: `npm i libName@development`* |
+| `release.yml`      | ✔️ `$default-branch`                                      | ✔️ Build<br>✔️ Versioning based on the [Semantic Versioning](http://semver.org/) specification.<br>✔️ Publish library on main channel<br>✔️ Make release tag on GitHub.<br>✔️ Adds `released` label and friendly comments on issues<br>✔️ Deploys on GitHub Pages using [angular-cli-ghpages](https://github.com/angular-schule/angular-cli-ghpages/#readme)                                                                                                                                                                                     |
 
 ### Files
 
@@ -102,23 +135,20 @@ Several files were created. Let's go over them:
 - `pre-commit`: Runs prettier on the staged files, and verifies that they don't contain `debugger`, `fit`, or `fdescribe`
 - `pre-push`: Runs the `test:lib:headless` command
 
-### Versioning and Release
-
-Versioning and release is taken care by [`semantic-release`](https://github.com/semantic-release/semantic-release). Just follow commit guidelines and commit using `npm run commit` each time, and semantic-release will handle the rest.
-
 ### Extras
 
 - Running the `add` command  updates the `tsconfig.json` file so that you can import any files from the npm path (`@scope/name`) rather than from relative paths.
 
 - It also populates the library's `package.json` with the initial required information. Make sure you verify the data is accurate before proceeding.
 
-### Skipping the Library Creation
+## NX Support
 
-The schematics provide the --skipLib flag for cases where we want to generate everything except the library.
+Adding schematics works with NX workspace.
 
-### Skipping the Schematics Creation
-
-The schematics provide the --skipSchematics flag for cases where we want to generate everything except the schematics.
+```bash
+# assuming that you have already created a lib using: nx generate library toaster
+ng add @ngneat/lib toaster --skipLib
+```
 
 ## Badge
 

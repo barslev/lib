@@ -22,8 +22,9 @@
     "ci": {
       "description": "Determine which CI tool to use.",
       "type": "string",
-      "enum": ["github actions"],
-      "default": "github actions"
+      "enum": ["github-actions", "travis", "circle"],
+      "default": "github-actions",
+      "x-prompt": "Which CI would you like to use?"
     },
     "repositoryUrl": {
       "description": "The repository Url",

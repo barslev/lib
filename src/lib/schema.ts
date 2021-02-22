@@ -13,7 +13,7 @@ export interface Schema {
   /**
    * Determine which CI tool to use.
    */
-  ci: 'github-actions';
+  ci: 'github-actions' | 'circle' | 'travis';
   /**
    * Determine which CI tool to use.
    */
