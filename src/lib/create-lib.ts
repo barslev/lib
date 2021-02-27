@@ -32,6 +32,10 @@ function removeLibFiles(tree: Tree): Tree {
 }
 
 function addSpectator(options: Schema, tree: Tree, context: SchematicContext, scopeWithName: string): Observable<Tree> {
+  if (options.skipSpectator) {
+    return of(tree);
+  }
+
   const module = tree.actions.find((action) => !!action.path.match(/\.module\.ts/));
   if (!module) {
     return of(tree);

@@ -40,18 +40,23 @@ const deps = [
   {
     name: 'cross-env',
     version: '^7.0.3',
-  }
+  },
 ];
 
 export function installDependencies(host: Tree, context: SchematicContext, options: Schema) {
   const addPackageToPackageJson = addPackageToPackageJsonFactory(host, 'devDependencies');
   if (!options.skipLib) {
-    // install spectator synchronously so we can use it for external schematics command later on.
-    context.logger.log('info', '⚡ Executing- npm install --save-dev @ngneat/spectator');
-    execSync('npm install --save-dev @ngneat/spectator');
-    // install angular-cli-ghpages using ng add command, so that it also updates angular.json
-    context.logger.log('info', '⚡ Executing- ng add angular-cli-ghpages');
-    execSync('ng add angular-cli-ghpages');
+    if (!options.skipSpectator) {
+      // install spectator synchronously so we can use it for external schematics command later on.
+      context.logger.log('info', '⚡ Executing- npm install --save-dev @ngneat/spectator');
+      execSync('npm install --save-dev @ngneat/spectator');
+    }
+
+    if (!options.skipAngularCliGhPages) {
+      // install angular-cli-ghpages using ng add command, so that it also updates angular.json
+      context.logger.log('info', '⚡ Executing- ng add angular-cli-ghpages');
+      execSync('ng add angular-cli-ghpages');
+    }
   }
 
   deps.forEach((dep) => {

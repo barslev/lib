@@ -1,186 +1,85 @@
-import {noop} from '@angular-devkit/schematics';
-import * as fromDevkit from '@angular-devkit/schematics';
-import {SchematicTestRunner, UnitTestTree} from '@angular-devkit/schematics/testing';
+import { Tree } from '@angular-devkit/schematics';
+import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
+import { Schema as ApplicationOptions, Style } from '@schematics/angular/application/schema';
 import * as path from 'path';
-import {Schema} from '../lib/schema';
-import {createWorkspace} from './fixtures/workspace';
+
+import { Schema } from '../lib/schema';
 
 const collectionPath = path.join(__dirname, '../collection.json');
 
-describe('lib', () => {
-  const schematicRunner = new SchematicTestRunner('schematics', collectionPath);
-  let options: Schema;
-  let appTree: UnitTestTree;
+describe('ng-add', () => {
+  const schematicRunner = new SchematicTestRunner('@ngneat/lib', require.resolve(collectionPath));
 
-  beforeEach(async () => {
-    options = { name: 'transloco', ci: 'travis' };
-    spyOn(fromDevkit, 'externalSchematic').and.returnValue(noop);
-    appTree = await createWorkspace(schematicRunner, appTree);
+  const workspaceOptions: WorkspaceOptions = {
+    name: 'workspace',
+    newProjectRoot: 'projects',
+    version: '6.0.0',
+  };
+
+  describe('with project', () => {
+    let appTree: UnitTestTree;
+
+    const appOptions: ApplicationOptions = {
+      name: 'bar',
+      inlineStyle: false,
+      inlineTemplate: false,
+      routing: false,
+      style: Style.Css,
+      skipTests: false,
+      skipPackageJson: false,
+    };
+
+    beforeEach(async () => {
+      appTree = await schematicRunner
+        .runExternalSchematicAsync('@schematics/angular', 'workspace', workspaceOptions)
+        .toPromise();
+      appTree = await schematicRunner
+        .runExternalSchematicAsync('@schematics/angular', 'application', appOptions, appTree)
+        .toPromise();
+    });
+
+    it('fails with missing tree', (done) => {
+      schematicRunner
+        .runSchematicAsync(
+          'ng-add',
+          {
+            name: 'test',
+          },
+          Tree.empty()
+        )
+        .subscribe({
+          error: (err) => {
+            expect(err).toBeTruthy();
+            done();
+          },
+        });
+    });
+
+    it('fails with missing params', (done) => {
+      schematicRunner.runSchematicAsync('ng-add', {}, appTree).subscribe({
+        error: (err) => {
+          expect(err).toBeTruthy();
+          done();
+        },
+      });
+    });
+
+    it('works', async () => {
+      const options: Schema = {
+        name: '@scope/toast',
+        ci: 'github-actions',
+        skipAngularCliGhPages: true,
+        skipSpectator: true,
+        skipSchematics: false,
+        skipPrompts: true,
+        importModule: true,
+        importStatement: 'ToastModule.forRoot()',
+        packages: [],
+      };
+      const tree: UnitTestTree = await schematicRunner.runSchematicAsync('ng-add', options, appTree).toPromise();
+
+      expect(tree.files).toContain('/.github/workflows/test.yml');
+    });
   });
-
-  describe('package.json', () => {
-    let json;
-    beforeEach( async () => {
-      const runner = new SchematicTestRunner('schematics', collectionPath);
-      const tree = await runner.runSchematicAsync('lib', options, appTree).toPromise();
-
-      json = JSON.parse(tree.readContent(`package.json`));
-    });
-
-    it('should add devDependencies', () => {
-      expect(json.devDependencies).toMatchSnapshot();
-    });
-
-    it('should add scripts', () => {
-      expect(json.scripts).toMatchSnapshot();
-    });
-
-    it('should add husky', () => {
-      expect(json.husky).toMatchSnapshot();
-    });
-
-    it('should add config', () => {
-      expect(json.config).toMatchSnapshot();
-    });
-
-    it('should add lint-staged', () => {
-      expect(json['lint-staged']).toMatchSnapshot();
-    });
-
-  });
-
-  describe('files', () => {
-    let tree;
-    beforeEach( async () => {
-      const runner = new SchematicTestRunner('schematics', collectionPath);
-      tree = await runner.runSchematicAsync('lib', options, appTree).toPromise();
-    });
-
-    it('should create README.md', () => {
-      const content = tree.readContent(`README.md`);
-      expect(content).toMatchSnapshot();
-    });
-
-    it('should create LICENSE', () => {
-      expect(tree.files.includes('/LICENSE')).toBeTruthy();
-    });
-
-    it('should create a logo', () => {
-      expect(tree.files.includes('/logo.svg')).toBeTruthy();
-    });
-
-    it('should create CODE_OF_CONDUCT.md', () => {
-      const content = tree.readContent(`CODE_OF_CONDUCT.md`);
-      expect(content).toMatchSnapshot();
-    });
-
-    it('should create commitlint.config.js', () => {
-      const content = tree.readContent(`commitlint.config.js`);
-      expect(content).toMatchSnapshot();
-    });
-
-    it('should create CONTRIBUTING.md', () => {
-      const content = tree.readContent(`CONTRIBUTING.md`);
-      expect(content).toMatchSnapshot();
-    });
-
-    it('should create ISSUE_TEMPLATE.md', () => {
-      const content = tree.readContent(`ISSUE_TEMPLATE.md`);
-      expect(content).toMatchSnapshot();
-    });
-
-    it('should create prettier.config.js', () => {
-      const content = tree.readContent(`prettier.config.js`);
-      expect(content).toMatchSnapshot();
-    });
-
-    it('should create PULL_REQUESTS.md', () => {
-      const content = tree.readContent(`PULL_REQUESTS.md`);
-      expect(content).toMatchSnapshot();
-    });
-
-  });
-
-  describe('with scope', () => {
-    let json;
-    let tree;
-    options = {...options, scope: '@ngneat'};
-
-    beforeEach( async () => {
-      const runner = new SchematicTestRunner('schematics', collectionPath);
-      tree = await runner.runSchematicAsync('lib', options, appTree).toPromise();
-      json = JSON.parse(tree.readContent(`package.json`));
-    });
-
-    it('should have scope name in README.md', () => {
-      const content = tree.readContent(`README.md`);
-      expect(content).toMatchSnapshot();
-    });
-
-    it('should add scripts with scope name', () => {
-      expect(json.scripts).toMatchSnapshot();
-    });
-
-  });
-
-  describe('with scope in name', () => {
-    let json;
-    let tree;
-    options = {...options, name: `@ngneat/${options.name}`};
-
-    beforeEach( async () => {
-      const runner = new SchematicTestRunner('schematics', collectionPath);
-      tree = await runner.runSchematicAsync('lib', options, appTree).toPromise();
-      json = JSON.parse(tree.readContent(`package.json`));
-    });
-
-    it('should have scope name in README.md', () => {
-      const content = tree.readContent(`README.md`);
-      expect(content).toMatchSnapshot();
-    });
-
-    it('should add scripts with scope name', () => {
-      expect(json.scripts).toMatchSnapshot();
-    });
-
-  });
-
-  describe('CI', () => {
-    let runner;
-    beforeEach( async () => {
-      runner = new SchematicTestRunner('schematics', collectionPath);
-    });
-
-    it('should create PULL_REQUESTS.md', async () => {
-      options = {...options, ci: 'travis'};
-      const tree = await runner.runSchematicAsync('lib', options, appTree).toPromise();
-      const content = tree.readContent(`.travis.yml`);
-      expect(content).toMatchSnapshot();
-    });
-
-  });
-
-  describe('Skip Lib', () => {
-    let tree;
-
-    beforeEach( async () => {
-      const runner = new SchematicTestRunner('schematics', collectionPath);
-      tree = await runner.runSchematicAsync('lib', {...options, skipLib: true}, appTree).toPromise();
-    });
-
-    it('should has test:headless script', () => {
-      const json = JSON.parse(tree.readContent(`package.json`));
-
-      expect(json.scripts['test:headless']).toBeTruthy();
-    });
-
-    it('should call test:headless on pre-push hook', () => {
-      const json = JSON.parse(tree.readContent(`package.json`));
-
-      expect((json.husky.hooks['pre-push'] as string).includes('test:headless')).toBeTruthy();
-    });
-
-  });
-
-
 });

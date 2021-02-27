@@ -10,9 +10,13 @@ export function createSchematics(options: Schema, scopeWithName: string): Rule {
   return async (tree: Tree, context: SchematicContext) => {
     installSchematicsDependencies(tree, context);
 
-    const { importModule, importStatement, packages } = await getPrompts(options);
+    let importModule: boolean, importStatement: string, packages: string[];
 
-    context.logger.info('packages : ' + packages);
+    if (options.skipPrompts) {
+      ({ importModule, importStatement, packages } = options);
+    } else {
+      ({ importModule, importStatement, packages } = await getPrompts(options));
+    }
 
     const host = createHost(tree);
     const { workspace } = await workspaces.readWorkspace('/', host);

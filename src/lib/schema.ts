@@ -25,7 +25,7 @@ export interface Schema {
   /**
    * The name of the library.
    */
-  name?: string;
+  name: string;
   /**
    * A prefix to apply to generated selectors.
    */
@@ -47,5 +47,37 @@ export interface Schema {
   /**
    * When true, does not set schematics to support "ng add ..." command
    */
-  skipSchematics?: boolean;
+  skipSchematics: boolean;
+  /**
+   * When true, skips setting angular-cli-ghpages configurations
+   */
+  skipAngularCliGhPages: boolean;
+  /**
+   * This name will be used while deploying on GitHub Pages
+   */
+  botName?: string;
+  /**
+   * This email will be used while deploying on GitHub Pages
+   */
+  botEmail?: string;
+  /**
+   * When true, does not add @ngneat/spectator
+   */
+  skipSpectator: boolean;
+  /**
+   * When true, skips prompts
+   */
+   skipPrompts: boolean;
+  /**
+   * When true, \"ng add ...\" command will import your module in client. Works only if skipPrompts is true
+   */
+   importModule: boolean;
+  /**
+   * The import statement when run through ng add. Works only if skipPrompts & importModule are true
+   */
+   importStatement: string;
+  /**
+   * 3rd party packages to add when run through ng add. Works only if skipPrompts is true
+   */
+   packages: string[];
 }

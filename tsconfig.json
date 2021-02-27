@@ -20,5 +20,5 @@
     "types": ["jest", "node"]
   },
   "include": ["src/**/*"],
-  "exclude": ["src/*/files/**/*", "src/test/**/*"]
+  "exclude": ["src/*/files/**/*", "src/old_test/**/*"]
 }

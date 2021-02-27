@@ -3,9 +3,9 @@ import { normalize, strings, workspaces } from '@angular-devkit/core';
 import { Schema } from '../schema';
 
 export function copyFiles(
-  importModule: any,
+  importModule: boolean,
   options: Schema,
-  importStatement: any,
+  importStatement: string,
   scopeWithName: string,
   packages: string[],
   tree: Tree,

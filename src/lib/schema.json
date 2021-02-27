@@ -90,6 +90,32 @@
       "default": "",
       "description": "This email will be used while deploying on GitHub Pages",
       "x-prompt": "What email should we use for deploying on GitHub Pages?"
+    },
+    "skipSpectator": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, does not add @ngneat/spectator"
+    },
+    "skipPrompts": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, skips prompts"
+    },
+    "importModule": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, \"ng add ...\" command will import your module in client. Works only if skipPrompts is true"
+    },
+    "importStatement": {
+      "type": "string",
+      "default": "",
+      "description": "The import statement when run through ng add. Works only if importModule is true"
+    },
+    "packages": {
+      "type": "array",
+      "default": [],
+      "description": "3rd party packages to add when run through ng add. Works only if skipPrompts is true"
     }
-  }
+  },
+  "required": ["name"]
 }
