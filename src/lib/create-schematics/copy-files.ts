@@ -19,7 +19,8 @@ export function copyFiles(
   scopeWithName: string,
   packages: string[],
   tree: Tree,
-  project: workspaces.ProjectDefinition
+  project: workspaces.ProjectDefinition,
+  onlySchematics = false
 ): Source {
   const importModuleSet = JSON.stringify(
     importModule
@@ -58,7 +59,9 @@ export function copyFiles(
 
   const libDistPath = scopeWithName.replace("@", "");
 
-  const templateSource = apply(url("../files/schematics"), [
+  const fileDepth = !onlySchematics ? "." : "..";
+
+  const templateSource = apply(url(`${fileDepth}/files/schematics`), [
     template({
       classify: strings.classify,
       scopeWithName,

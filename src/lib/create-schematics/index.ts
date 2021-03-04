@@ -85,7 +85,8 @@ export function createSchematics(options: CreateSchematicsSchema): Rule {
       scopeWithName,
       packages,
       tree,
-      project
+      project,
+      onlySchematics
     );
 
     updateLibPackage(scopeWithName, tree);
