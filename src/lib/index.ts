@@ -44,8 +44,8 @@ export function lib(options: Schema): Rule {
     const scopeWithName = options.scope
       ? `${options.scope}/${options.name}`
       : options.name;
-    const libPath = getLibPath(scopeWithName);
     const isNx = tree.exists("/nx.json");
+    const libPath = getLibPath(scopeWithName, isNx);
 
     const updatePackageJsonRule = updatePackageJson(
       libPath,

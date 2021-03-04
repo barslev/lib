@@ -59,6 +59,9 @@ export function createSchematics(options: CreateSchematicsSchema): Rule {
       ? `${options.scope}/${options.name}`
       : options.name;
     const onlySchematics = true;
+    const isNx = tree.exists("/nx.json");
+    const libPath = getLibPath(scopeWithName, isNx);
+
     installSchematicsDependencies(tree, onlySchematics);
 
     let importModule: boolean, importStatement: string, packages: string[];
@@ -89,16 +92,14 @@ export function createSchematics(options: CreateSchematicsSchema): Rule {
       onlySchematics
     );
 
-    updateLibPackage(scopeWithName, tree);
+    updateLibPackage(scopeWithName, tree, libPath);
 
     context.addTask(new NodePackageInstallTask());
 
     return chain([mergeWith(templateSource)]);
   };
 }
-function updateLibPackage(scopeWithName: string, tree: Tree) {
-  const libPath = getLibPath(scopeWithName);
-
+function updateLibPackage(scopeWithName: string, tree: Tree, libPath: string) {
   const packageJSONPath = `${libPath}/package.json`;
 
   if (tree.exists(packageJSONPath)) {
