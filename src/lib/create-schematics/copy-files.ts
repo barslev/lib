@@ -1,6 +1,15 @@
-import { apply, filter, move, SchematicsException, template, Tree, url } from '@angular-devkit/schematics';
-import { normalize, strings, workspaces } from '@angular-devkit/core';
-import { Schema } from '../schema';
+import {
+  apply,
+  filter,
+  move,
+  SchematicsException,
+  Source,
+  template,
+  Tree,
+  url,
+} from "@angular-devkit/schematics";
+import { normalize, strings, workspaces } from "@angular-devkit/core";
+import { Schema } from "../schema";
 
 export function copyFiles(
   importModule: boolean,
@@ -10,7 +19,7 @@ export function copyFiles(
   packages: string[],
   tree: Tree,
   project: workspaces.ProjectDefinition
-) {
+): Source {
   const importModuleSet = JSON.stringify(
     importModule
       ? [
@@ -28,24 +37,27 @@ export function copyFiles(
     packagesWithVersion = packages
       .map((i: string) => i.trim())
       .map((i: string) => {
-        const lastIndex = i.lastIndexOf('@');
+        const lastIndex = i.lastIndexOf("@");
         if (lastIndex < 0) {
           throw new SchematicsException(
             `Invalid package syntax for: ${i}. Valid format is: <PACKAGE_NAME>@<PACKAGE_VERSION>`
           );
         }
-        return { name: i.substr(lastIndex + 1), version: i.substr(0, lastIndex) };
+        return {
+          name: i.substr(lastIndex + 1),
+          version: i.substr(0, lastIndex),
+        };
       });
   }
 
   const depthFromRootLib = scopeWithName
-    .split('/')
-    .map((_) => '..')
-    .join('/');
+    .split("/")
+    .map(() => "..")
+    .join("/");
 
-  const libDistPath = scopeWithName.replace('@', '');
+  const libDistPath = scopeWithName.replace("@", "");
 
-  const templateSource = apply(url('./files/schematics'), [
+  const templateSource = apply(url("./files/schematics"), [
     template({
       classify: strings.classify,
       scopeWithName,
@@ -55,7 +67,7 @@ export function copyFiles(
       parse: JSON.parse,
       depthFromRootLib,
       libDistPath,
-      name: options.name
+      name: options.name,
     }),
     filter((path) => !tree.exists(path)),
     move(normalize(`${project.sourceRoot}/..`)),

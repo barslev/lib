@@ -1,30 +1,35 @@
-import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
+import { Rule, SchematicContext, Tree } from "@angular-devkit/schematics";
 
-import { getPackageJson, setPackageJson } from '../utils/package';
-import { Schema } from './schema';
+import { getPackageJson, setPackageJson } from "../utils/package";
+import { Schema } from "./schema";
 
-function scriptsToAdd(libPath: string, libName: string, skipLib: boolean, skipSchematics: boolean) {
+function scriptsToAdd(
+  libPath: string,
+  libName: string,
+  skipLib: boolean,
+  skipSchematics: boolean
+) {
   const basicScripts = {
-    'contributors:add': 'all-contributors add',
-    'hooks:pre-commit': 'node hooks/pre-commit.js',
-    commit: 'cz',
+    "contributors:add": "all-contributors add",
+    "hooks:pre-commit": "node hooks/pre-commit.js",
+    commit: "cz",
   };
 
   if (skipLib) {
     return {
       ...basicScripts,
-      'test:headless': 'cross-env CI=true npm run test',
+      "test:headless": "cross-env CI=true npm run test",
     };
   }
 
-  const distPath = libName.replace('@', '');
+  const distPath = libName.replace("@", "");
 
   const libsScripts = {
-    deploy: `ng deploy --base-href=https://ngneat.github.io/${libName}/`,
+    deploy: `ng deploy --base-href=https://username.github.io/${libName}/`,
     copy: `cp -r README.md dist/${distPath}`,
-    'build:lib': `ng build ${libName} --prod && npm run copy`,
-    'test:lib': `ng test ${libName}`,
-    'test:lib:headless': 'cross-env CI=true npm run test:lib',
+    "build:lib": `ng build ${libName} --prod && npm run copy`,
+    "test:lib": `ng test ${libName}`,
+    "test:lib:headless": "cross-env CI=true npm run test:lib",
   };
 
   if (skipSchematics) {
@@ -35,8 +40,8 @@ function scriptsToAdd(libPath: string, libName: string, skipLib: boolean, skipSc
   }
 
   const schematicsScripts = {
-    'postbuild:lib': `npm run build --prefix ${libPath}`,
-    'semantic-release': 'semantic-release',
+    "postbuild:lib": `npm run build --prefix ${libPath}`,
+    "semantic-release": "semantic-release",
   };
 
   return {
@@ -49,34 +54,43 @@ function scriptsToAdd(libPath: string, libName: string, skipLib: boolean, skipSc
 function generateHooks() {
   return {
     hooks: {
-      'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
-      'pre-commit': 'npm run hooks:pre-commit && lint-staged',
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "npm run hooks:pre-commit && lint-staged",
     },
   };
 }
 
 const config = {
   commitizen: {
-    path: 'cz-conventional-changelog',
+    path: "cz-conventional-changelog",
   },
 };
 
 const lintStaged = {
-  '*.{js,json,css,scss,ts,html,component.html}': ['prettier --write'],
+  "*.{js,json,css,scss,ts,html,component.html}": ["prettier --write"],
 };
 
-export function updatePackageJson(libPath: string, libName: string, options: Schema): Rule {
+export function updatePackageJson(
+  libPath: string,
+  libName: string,
+  options: Schema
+): Rule {
   return (host: Tree, context: SchematicContext) => {
-    context.logger.info('⌛ Updating root package.json...');
+    context.logger.info("⌛ Updating root package.json...");
     const json = getPackageJson(host);
 
-    json['config'] = config;
-    json['lint-staged'] = lintStaged;
-    json['scripts'] = {
+    json["config"] = config;
+    json["lint-staged"] = lintStaged;
+    json["scripts"] = {
       ...json.scripts,
-      ...scriptsToAdd(libPath, libName, !!options.skipLib, options.skipSchematics),
+      ...scriptsToAdd(
+        libPath,
+        libName,
+        !!options.skipLib,
+        options.skipSchematics
+      ),
     };
-    json['husky'] = generateHooks();
+    json["husky"] = generateHooks();
 
     setPackageJson(host, json);
     return host;

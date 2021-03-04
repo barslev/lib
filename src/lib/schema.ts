@@ -13,7 +13,7 @@ export interface Schema {
   /**
    * Determine which CI tool to use.
    */
-  ci: 'github-actions' | 'circle' | 'travis';
+  ci: "github-actions" | "circle" | "travis";
   /**
    * Determine which CI tool to use.
    */
@@ -67,17 +67,17 @@ export interface Schema {
   /**
    * When true, skips prompts
    */
-   skipPrompts: boolean;
+  skipPrompts: boolean;
   /**
    * When true, \"ng add ...\" command will import your module in client. Works only if skipPrompts is true
    */
-   importModule: boolean;
+  importModule: boolean;
   /**
    * The import statement when run through ng add. Works only if skipPrompts & importModule are true
    */
-   importStatement: string;
+  importStatement: string;
   /**
    * 3rd party packages to add when run through ng add. Works only if skipPrompts is true
    */
-   packages: string[];
+  packages: string[];
 }

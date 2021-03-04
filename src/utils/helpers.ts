@@ -1,10 +1,14 @@
-import { virtualFs, workspaces } from '@angular-devkit/core';
-import { Rule, SchematicContext, SchematicsException } from '@angular-devkit/schematics';
-import { Tree } from '@angular-devkit/schematics/src/tree/interface';
-import { isObservable, from, of, Observable } from 'rxjs';
+import { virtualFs, workspaces } from "@angular-devkit/core";
+import {
+  Rule,
+  SchematicContext,
+  SchematicsException,
+} from "@angular-devkit/schematics";
+import { Tree } from "@angular-devkit/schematics/src/tree/interface";
+import { isObservable, from, of, Observable } from "rxjs";
 
-export function isFunction(val: any): val is Function {
-  return typeof val === 'function';
+export function isFunction(val: any): boolean {
+  return typeof val === "function";
 }
 
 export function isPromise(v: any) {
@@ -19,8 +23,14 @@ export function observify<T>(asyncOrValue: any | T): Observable<T> {
   return of(asyncOrValue);
 }
 
-export function toTree(ruleOrTree: Rule | any, tree: Tree, context: SchematicContext): Tree {
-  return isFunction(ruleOrTree) ? ruleOrTree(tree, context) : (ruleOrTree as any);
+export function toTree(
+  ruleOrTree: Rule | any,
+  tree: Tree,
+  context: SchematicContext
+): Tree {
+  return isFunction(ruleOrTree)
+    ? ruleOrTree(tree, context)
+    : (ruleOrTree as any);
 }
 
 export function createHost(tree: Tree): workspaces.WorkspaceHost {
@@ -28,7 +38,7 @@ export function createHost(tree: Tree): workspaces.WorkspaceHost {
     async readFile(path: string): Promise<string> {
       const data = tree.read(path);
       if (!data) {
-        throw new SchematicsException('File not found.');
+        throw new SchematicsException("File not found.");
       }
       return virtualFs.fileBufferToString(data);
     },

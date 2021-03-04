@@ -1,85 +1,75 @@
-import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
-import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
-import { addPackageToPackageJsonFactory } from '../utils/package';
-import { Schema } from './schema';
-const { execSync } = require('child_process');
+import { Rule, SchematicContext, Tree } from "@angular-devkit/schematics";
+import { NodePackageInstallTask } from "@angular-devkit/schematics/tasks";
+import { addPackageToPackageJsonFactory } from "../utils/package";
+import { Schema } from "./schema";
+import { execSync } from "child_process";
 
 export function installDependencies(options: Schema): Rule {
   return (host: Tree, context: SchematicContext) => {
     const deps = [
       {
-        name: '@commitlint/cli',
-        version: '^12.0.1',
+        name: "@commitlint/cli",
+        version: "^12.0.1",
       },
       {
-        name: '@commitlint/config-conventional',
-        version: '^12.0.1',
+        name: "@commitlint/config-conventional",
+        version: "^12.0.1",
       },
       {
-        name: 'git-cz',
-        version: '^4.7.6',
+        name: "git-cz",
+        version: "^4.7.6",
       },
       {
-        name: 'all-contributors-cli',
-        version: '^6.20.0',
+        name: "all-contributors-cli",
+        version: "^6.20.0",
       },
       {
-        name: 'lint-staged',
-        version: '^10.5.4',
+        name: "lint-staged",
+        version: "^10.5.4",
       },
       {
-        name: 'prettier',
-        version: '^2.2.1',
+        name: "prettier",
+        version: "^2.2.1",
       },
       {
-        name: 'husky',
-        version: '^5.1.2',
+        name: "husky",
+        version: "^5.1.2",
       },
       {
-        name: 'cross-env',
-        version: '^7.0.3',
+        name: "cross-env",
+        version: "^7.0.3",
       },
       {
-        name: 'jest',
-        version: '^26.6.3',
+        name: "jest",
+        version: "^26.6.3",
       },
       {
-        name: 'ts-jest',
-        version: '^26.5.2',
+        name: "ts-jest",
+        version: "^26.5.2",
       },
       {
-        name: '@types/jest',
-        version: '^26.0.20',
+        name: "@types/jest",
+        version: "^26.0.20",
       },
     ];
 
     if (!options.skipLib && !options.skipSpectator) {
       // install spectator synchronously so we can use it for external schematics command later on.
-      execSync('npm install --save-dev @ngneat/spectator');
-      deps.push({ name: '@ngneat/spectator', version: '^7.0.0' });
+      execSync("npm install --save-dev @ngneat/spectator");
+      deps.push({ name: "@ngneat/spectator", version: "^7.0.0" });
     }
 
-    const addPackageToPackageJson = addPackageToPackageJsonFactory(host, 'devDependencies');
+    const addPackageToPackageJson = addPackageToPackageJsonFactory(
+      host,
+      "devDependencies"
+    );
 
-    deps
-      .sort((a, b) => {
-        var nameA = a.name.toUpperCase();
-        var nameB = b.name.toUpperCase();
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-
-        return 0;
-      })
-      .forEach((dep) => {
-        addPackageToPackageJson(dep.name, dep.version);
-      });
+    deps.forEach((dep) => {
+      addPackageToPackageJson(dep.name, dep.version);
+    });
 
     context.addTask(new NodePackageInstallTask());
-    context.logger.log('info', '🔍 Adding packages...');
+    context.logger.log("info", "🔍 Adding packages...");
 
     return host;
   };
