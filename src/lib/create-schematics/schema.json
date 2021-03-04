@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "id": "SchematicsLibrary",
+  "title": "Library Options Schema",
+  "type": "object",
+  "description": "Generate a schematics in the library project.",
+  "long-description": "./library-long.md",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "The name of the library.",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What name would you like to use for the library?"
+    },
+    "scope": {
+      "type": "string",
+      "description": "The npm scope of the library."
+    },
+    "skipPrompts": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, skips prompts"
+    },
+    "importModule": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, \"ng add ...\" command will import your module in client. Works only if skipPrompts is true"
+    },
+    "importStatement": {
+      "type": "string",
+      "default": "",
+      "description": "The import statement when run through ng add. Works only if importModule is true"
+    },
+    "packages": {
+      "type": "array",
+      "default": [],
+      "description": "3rd party packages to add when run through ng add. Works only if skipPrompts is true"
+    }
+  },
+  "required": ["name"]
+}

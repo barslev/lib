@@ -1,9 +1,10 @@
 import { strings } from "@angular-devkit/core";
 import * as prompts from "prompts";
 import { Schema } from "../schema";
+import { Schema as CreateSchematicsSchema } from "./schema";
 
 export async function getPrompts(
-  options: Schema
+  options: Schema | CreateSchematicsSchema
 ): Promise<prompts.Answers<string>> {
   const questions: prompts.PromptObject[] = [
     {

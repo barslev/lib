@@ -23,8 +23,7 @@
     "types": [
       "jest",
       "node"
-    ],
-    "outDir": "dist"
+    ]
   },
   "include": ["src/**/*"],
   "exclude": ["src/*/files/**/*", "src/**/*.spec.ts"]

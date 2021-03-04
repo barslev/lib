@@ -11,6 +11,11 @@
       "schema": "./lib/schema.json",
       "description": "Generates open source boilerplate with angular lib.",
       "factory": "./lib/index#lib"
+    },
+    "create-schematics": {
+      "description": "Generate a schematics in the library project.",
+      "factory": "./lib/create-schematics/index#createSchematics",
+      "schema": "./lib/create-schematics/schema.json"
     }
   }
 }

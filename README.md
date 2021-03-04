@@ -39,8 +39,16 @@ Schematics that wrap the Angular generate library schematics and provide all the
 
 ## Usage
 
+### Create library with schematics
+
 ```bash
 ng add @ngneat/lib @scope/toaster # change @scope/toaster with your lib name
+```
+
+### Generate schematics in existing library
+
+```bash
+ng generate @ngneat/lib:create-schematics @scope/toaster # change @scope/toaster with your lib name
 ```
 
 ### Options

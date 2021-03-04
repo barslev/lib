@@ -6,13 +6,14 @@ import {
   noop,
 } from "@angular-devkit/schematics";
 import { Observable } from "rxjs";
+import { getLibPath } from "../utils/helpers";
 
 import { installDependencies } from "./add-dependencies";
 import { addAngularCliGhPages } from "./add-ng-cli-ghpages";
 import { addFiles } from "./add-root-files";
 import { addSpectator } from "./add-spectator";
 import { createLib } from "./create-lib";
-import { createSchematics } from "./create-schematics";
+import { createSchematicsWithLib } from "./create-schematics";
 import { Schema } from "./schema";
 import { updatePackageJson } from "./update-package-json";
 
@@ -21,10 +22,6 @@ function rulify(obj: Tree | Observable<Tree> | Rule | null): Rule {
     return typeof obj === "function" ? obj(tree, context) : obj;
   };
   return rule as Rule;
-}
-
-function getLibPath(scopeWithName: string) {
-  return `projects/${scopeWithName}`.replace("@", "");
 }
 
 function splitScopeFromName(options: Schema): Schema {
@@ -72,7 +69,7 @@ export function lib(options: Schema): Rule {
 
     const schematicsRule = options.skipSchematics
       ? noop()
-      : createSchematics(options, scopeWithName);
+      : createSchematicsWithLib(options, scopeWithName);
 
     const angularCliGhPagesRule = options.skipAngularCliGhPages
       ? noop()

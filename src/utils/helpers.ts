@@ -53,3 +53,7 @@ export function createHost(tree: Tree): workspaces.WorkspaceHost {
     },
   };
 }
+
+export function getLibPath(scopeWithName: string) {
+  return `projects/${scopeWithName}`.replace("@", "");
+}

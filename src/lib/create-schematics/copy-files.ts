@@ -10,10 +10,11 @@ import {
 } from "@angular-devkit/schematics";
 import { normalize, strings, workspaces } from "@angular-devkit/core";
 import { Schema } from "../schema";
+import { Schema as CreateSchematicsSchema } from "./schema";
 
 export function copyFiles(
   importModule: boolean,
-  options: Schema,
+  options: Schema | CreateSchematicsSchema,
   importStatement: string,
   scopeWithName: string,
   packages: string[],
@@ -57,7 +58,7 @@ export function copyFiles(
 
   const libDistPath = scopeWithName.replace("@", "");
 
-  const templateSource = apply(url("./files/schematics"), [
+  const templateSource = apply(url("../files/schematics"), [
     template({
       classify: strings.classify,
       scopeWithName,
