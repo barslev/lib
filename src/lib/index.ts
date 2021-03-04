@@ -1,7 +1,10 @@
 import { SchematicContext, Tree, chain, Rule, noop } from '@angular-devkit/schematics';
 import { Observable } from 'rxjs';
+
 import { installDependencies } from './add-dependencies';
+import { addAngularCliGhPages } from './add-ng-cli-ghpages';
 import { addFiles } from './add-root-files';
+import { addSpectator } from './add-spectator';
 import { createLib } from './create-lib';
 import { createSchematics } from './create-schematics';
 import { Schema } from './schema';
@@ -37,16 +40,32 @@ export function lib(options: Schema): Rule {
 
     const scopeWithName = options.scope ? `${options.scope}/${options.name}` : options.name;
     const libPath = getLibPath(scopeWithName);
+    const isNx = tree.exists('/nx.json');
 
-    updatePackageJson(tree, libPath, scopeWithName, options);
-    installDependencies(tree, _context, options);
+    const updatePackageJsonRule = updatePackageJson(libPath, scopeWithName, options);
 
-    const libRule = options.skipLib ? noop() : rulify(createLib(options, scopeWithName, libPath, tree, _context));
+    const installDepsRule = installDependencies(options);
+
+    const libRule = options.skipLib ? noop() : rulify(createLib(options, scopeWithName, libPath, tree, _context, isNx));
+
+    const addSpectatorRule = !(options.skipLib || options.skipSpectator)
+      ? addSpectator(options, scopeWithName)
+      : noop();
 
     const filesRule = addFiles(options, scopeWithName, tree);
 
     const schematicsRule = options.skipSchematics ? noop() : createSchematics(options, scopeWithName);
 
-    return chain([libRule, filesRule, schematicsRule]);
+    const angularCliGhPagesRule = options.skipAngularCliGhPages ? noop() : addAngularCliGhPages();
+
+    return chain([
+      libRule,
+      filesRule,
+      schematicsRule,
+      updatePackageJsonRule,
+      installDepsRule,
+      addSpectatorRule,
+      angularCliGhPagesRule,
+    ]);
   };
 }

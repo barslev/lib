@@ -1,8 +1,7 @@
-import { Tree, SchematicContext } from '@angular-devkit/schematics';
-import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
+import { Tree } from '@angular-devkit/schematics';
 import { addPackageToPackageJsonFactory } from '../../utils/package';
 
-export function installSchematicsDependencies(host: Tree, context: SchematicContext) {
+export function installSchematicsDependencies(host: Tree) {
   const addPackageToPackageJson = addPackageToPackageJsonFactory(host, 'devDependencies');
 
   const deps = [
@@ -31,6 +30,4 @@ export function installSchematicsDependencies(host: Tree, context: SchematicCont
   deps.forEach((dep) => {
     addPackageToPackageJson(dep.name, dep.version);
   });
-
-  context.addTask(new NodePackageInstallTask());
 }

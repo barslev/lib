@@ -8,7 +8,7 @@ import { copyFiles } from './copy-files';
 
 export function createSchematics(options: Schema, scopeWithName: string): Rule {
   return async (tree: Tree, context: SchematicContext) => {
-    installSchematicsDependencies(tree, context);
+    installSchematicsDependencies(tree);
 
     let importModule: boolean, importStatement: string, packages: string[];
 
@@ -26,8 +26,8 @@ export function createSchematics(options: Schema, scopeWithName: string): Rule {
       throw new SchematicsException(`Invalid project name: ${scopeWithName}`);
     }
 
+    context.logger.info('⌛ Generating Schematic Files...');
     const templateSource = copyFiles(importModule, options, importStatement, scopeWithName, packages, tree, project);
-
     return chain([mergeWith(templateSource)]);
   };
 }

@@ -23,7 +23,7 @@ export function copyFiles(
       : []
   );
 
-  let packagesWithVersion = [];
+  let packagesWithVersion: { name: string; version: string }[] = [];
   if (packages.length > 1) {
     packagesWithVersion = packages
       .map((i: string) => i.trim())
@@ -55,6 +55,7 @@ export function copyFiles(
       parse: JSON.parse,
       depthFromRootLib,
       libDistPath,
+      name: options.name
     }),
     filter((path) => !tree.exists(path)),
     move(normalize(`${project.sourceRoot}/..`)),

@@ -1,7 +1,7 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "lib-name-ng-add",
-  "title": "lib-name ng-add schematic",
+  "id": "<%= classify(name) %>Schematics",
+  "title": "<%= classify(name) %> ng-add schematic",
   "type": "object",
   "properties": {
     "project": {

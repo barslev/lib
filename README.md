@@ -61,6 +61,7 @@ ng add @ngneat/lib @scope/toaster # change @scope/toaster with your lib name
 | `skipAngularCliGhPages` | `boolean`                                    | When true, skips setting angular-cli-ghpages configurations<br>*Default: `false`*                                                                                                                                      |
 | `botName`               | `string`                                     | This name will be used while deploying on GitHub Pages                                                                                                                                                                 |
 | `botEmail`              | `string`                                     | This email will be used while deploying on GitHub Pages                                                                                                                                                                |
+| `skipSpectator`         | `boolean`                                    | When true, does not add `@ngneat/spectator`<br>*Default: false*                                                                                                                                                        |
 
 ### Basic Working Flow
 
@@ -84,11 +85,11 @@ Publish (with versioning and release) is taken care by [`semantic-release`](http
 
 There are total 3 workflows provided:
 
-| Workflow           | Runs On                                                  | Tasks                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| ------------------ | -------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `test.yml`         | ✔️ All branches<br>❌ `$default-branch`<br>❌ `development` | ✔️ Lint<br>✔️ Build<br>✔️ Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
-| `release-beta.yml` | ✔️ `development`                                          | ✔️ Lint<br>✔️ Build<br>✔️ Test<br>✔️ Versioning based on the [Semantic Versioning](http://semver.org/) specification.<br>✔️ Publish library on development channel<br>✔️ Make release tag on GitHub<br>✔️ Adds `released@development` label and friendly comments on issues<br>*Checkout `branches` in `.releasers.json` file in your project. It is helpful when you're pushing a breaking change and you want to do some beta testing over it, testers can install your library's beta version using this command: `npm i libName@development`* |
-| `release.yml`      | ✔️ `$default-branch`                                      | ✔️ Build<br>✔️ Versioning based on the [Semantic Versioning](http://semver.org/) specification.<br>✔️ Publish library on main channel<br>✔️ Make release tag on GitHub.<br>✔️ Adds `released` label and friendly comments on issues<br>✔️ Deploys on GitHub Pages using [angular-cli-ghpages](https://github.com/angular-schule/angular-cli-ghpages/#readme)                                                                                                                                                                                     |
+| Workflow           | Runs On                                         | Tasks                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+| ------------------ | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `test.yml`         | ✔️ All branches<br>❌ `master`<br>❌ `development` | ✔️ Lint<br>✔️ Build<br>✔️ Test                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| `release-beta.yml` | ✔️ `development`                                 | ✔️ Lint<br>✔️ Build<br>✔️ Test<br>✔️ Versioning based on the [Semantic Versioning](http://semver.org/) specification.<br>✔️ Publish library on development channel<br>✔️ Make release tag on GitHub<br>✔️ Adds `released@development` label and friendly comments on issues<br>*Checkout `branches` in `.releasers.json` file in your project. It is helpful when you're pushing a breaking change and you want to do some beta testing over it, testers can install your library's beta version using this command: `npm i libName@development`* |
+| `release.yml`      | ✔️ `master`                                      | ✔️ Build<br>✔️ Versioning based on the [Semantic Versioning](http://semver.org/) specification.<br>✔️ Publish library on main channel<br>✔️ Make release tag on GitHub.<br>✔️ Adds `released` label and friendly comments on issues<br>✔️ Deploys on GitHub Pages using [angular-cli-ghpages](https://github.com/angular-schule/angular-cli-ghpages/#readme)                                                                                                                                                                                     |
 
 ### Files
 
@@ -141,22 +142,13 @@ Several files were created. Let's go over them:
 
 - It also populates the library's `package.json` with the initial required information. Make sure you verify the data is accurate before proceeding.
 
-## NX Support
-
-Adding schematics works with NX workspace.
-
-```bash
-# assuming that you have already created a lib using: nx generate library toaster
-ng add @ngneat/lib toaster --skipLib
-```
-
 ## Badge
 
 Show that your project is based off of our lib
 
 [![ngneat-lib](https://img.shields.io/badge/made%20with-%40ngneat%2Flib-ad1fe3?logo=angular)](https://github.com/ngneat/lib)
 
-```
+```markdown
 [![ngneat-lib](https://img.shields.io/badge/made%20with-%40ngneat%2Flib-ad1fe3?logo=angular)](https://github.com/ngneat/lib)
 ```
 

@@ -1,4 +1,4 @@
-import { Tree } from '@angular-devkit/schematics';
+import { Rule, SchematicContext, Tree } from '@angular-devkit/schematics';
 
 import { getPackageJson, setPackageJson } from '../utils/package';
 import { Schema } from './schema';
@@ -7,7 +7,7 @@ function scriptsToAdd(libPath: string, libName: string, skipLib: boolean, skipSc
   const basicScripts = {
     'contributors:add': 'all-contributors add',
     'hooks:pre-commit': 'node hooks/pre-commit.js',
-    commit: 'git-cz'
+    commit: 'cz',
   };
 
   if (skipLib) {
@@ -46,7 +46,7 @@ function scriptsToAdd(libPath: string, libName: string, skipLib: boolean, skipSc
   };
 }
 
-function generateHooks(skipLib: boolean) {
+function generateHooks() {
   return {
     hooks: {
       'commit-msg': 'commitlint -E HUSKY_GIT_PARAMS',
@@ -62,19 +62,23 @@ const config = {
 };
 
 const lintStaged = {
-  '*.{js,json,css,scss,ts,html,component.html}': ['prettier --write', 'git add'],
+  '*.{js,json,css,scss,ts,html,component.html}': ['prettier --write'],
 };
 
-export function updatePackageJson(host: Tree, libPath: string, libName: string, options: Schema) {
-  const json = getPackageJson(host);
+export function updatePackageJson(libPath: string, libName: string, options: Schema): Rule {
+  return (host: Tree, context: SchematicContext) => {
+    context.logger.info('⌛ Updating root package.json...');
+    const json = getPackageJson(host);
 
-  json['config'] = config;
-  json['lint-staged'] = lintStaged;
-  json['scripts'] = {
-    ...json.scripts,
-    ...scriptsToAdd(libPath, libName, options.skipLib, options.skipSchematics),
+    json['config'] = config;
+    json['lint-staged'] = lintStaged;
+    json['scripts'] = {
+      ...json.scripts,
+      ...scriptsToAdd(libPath, libName, !!options.skipLib, options.skipSchematics),
+    };
+    json['husky'] = generateHooks();
+
+    setPackageJson(host, json);
+    return host;
   };
-  json['husky'] = generateHooks(options.skipLib);
-
-  setPackageJson(host, json);
 }

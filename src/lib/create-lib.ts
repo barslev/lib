@@ -1,9 +1,7 @@
-import { externalSchematic, Tree, SchematicContext, Rule, chain } from '@angular-devkit/schematics';
-import { Schema as ComponentSchema } from '@schematics/angular/component/schema';
+import { externalSchematic, Tree, SchematicContext, Rule } from '@angular-devkit/schematics';
 import * as fs from 'fs';
-import * as path from 'path';
-import { Observable, of } from 'rxjs';
-import { tap, switchMap, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { tap, map } from 'rxjs/operators';
 import { getJSON, setJSON, readFile, writeFile, readFileFromFS } from '../utils/files';
 import { observify, isFunction } from '../utils/helpers';
 import { Schema } from './schema';
@@ -29,34 +27,6 @@ function removeLibFiles(tree: Tree): Tree {
     .forEach((action) => tree.delete(action.path));
 
   return tree;
-}
-
-function addSpectator(options: Schema, tree: Tree, context: SchematicContext, scopeWithName: string): Observable<Tree> {
-  if (options.skipSpectator) {
-    return of(tree);
-  }
-
-  const module = tree.actions.find((action) => !!action.path.match(/\.module\.ts/));
-  if (!module) {
-    return of(tree);
-  }
-  const component = externalSchematic('@ngneat/spectator', 'spectator-component', {
-    path: path.dirname(module.path),
-    name: options.name,
-    skipImport: true,
-    flat: true,
-    inlineStyle: true,
-    inlineTemplate: true,
-    project: scopeWithName,
-  } as ComponentSchema);
-  const service = externalSchematic('@ngneat/spectator', 'spectator-service', {
-    path: path.dirname(module.path),
-    name: options.name,
-  });
-
-  const spectator = chain([component, service]);
-
-  return observify<Tree>(toTree(spectator(tree, context), tree, context));
 }
 
 function updateTsConfig(host: Tree, name: string, libPath: string): Tree {
@@ -110,10 +80,12 @@ function packageJSONExtensions(options: Schema, scopeWithName: string) {
     ...basicPkgJson,
     schematics: './schematics/collection.json',
     scripts: {
+      prebuild: 'npm run test:schematics',
       build: 'tsc -p tsconfig.schematics.json',
       'copy:schemas': `cpx schematics/ng-add ${depthFromRootLib}/dist/ngneat/hot-toast/`,
       'copy:collection': `cpx schematics/collection.json ${depthFromRootLib}/dist/ngneat/hot-toast/schematics/`,
       postbuild: 'npm run copy:schemas && npm run copy:collection',
+      'test:schematics': 'npm run build && jest --watch',
     },
   };
 }
@@ -134,16 +106,19 @@ export function createLib(
   scopeWithName: string,
   libPath: string,
   tree: Tree,
-  context: SchematicContext
+  context: SchematicContext,
+  isNx: boolean
 ): Observable<Tree> {
-  const libRule = externalSchematic('@schematics/angular', 'library', { ...options, name: scopeWithName });
+  const libRule = externalSchematic(isNx ? '@nrwl/angular' : '@schematics/angular', 'library', {
+    ...(!isNx && options),
+    name: scopeWithName,
+  });
   const libTree$ = observify<Tree>(toTree(libRule(tree, context), tree, context));
 
   return libTree$.pipe(
     tap((tree) => updatePackageJSON(options, libPath, tree, scopeWithName)),
     map(removeLibFiles),
     map((libTree) => updateTsConfig(libTree, scopeWithName, libPath)),
-    map((libTree) => updateKarmaConfig(libTree, libPath)),
-    switchMap((libTree) => addSpectator(options, libTree, context, scopeWithName))
+    map((libTree) => updateKarmaConfig(libTree, libPath))
   );
 }
