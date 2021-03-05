@@ -1,3 +1,16 @@
+# [2.0.0-beta.1](https://github.com/ngneat/lib/compare/v1.1.0-beta.1...v2.0.0-beta.1) (2021-03-05)
+
+
+### Features
+
+* add breaking change ([dbecf32](https://github.com/ngneat/lib/commit/dbecf328711d3be5b5f6bf1809bfbfbada041350))
+
+
+### BREAKING CHANGES
+
+* add Schematics support for ng-add, GitHub Actions, Semantics release, Documentation
+for above, Making test cases work
+
 # [1.1.0-beta.1](https://github.com/ngneat/lib/compare/v1.0.4...v1.1.0-beta.1) (2021-03-05)
 
 
