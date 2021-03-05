@@ -1,3 +1,21 @@
+# [1.1.0-beta.1](https://github.com/ngneat/lib/compare/v1.0.4...v1.1.0-beta.1) (2021-03-05)
+
+
+### Bug Fixes
+
+* **add-dependencies.ts:** add @ngneat/spectator to deps ([8f1de37](https://github.com/ngneat/lib/commit/8f1de37106050525f349d8769536367b170f2183))
+* **copy-files.ts:** correct template path ([4e3474f](https://github.com/ngneat/lib/commit/4e3474f1d4c4af93c2136557f5292f922eaf569f))
+* **tsconfig.schematics.json:** outDir path ([f40d7ac](https://github.com/ngneat/lib/commit/f40d7ac39616b1ca84611d8bc6e6d15a3376f42e))
+
+
+### Features
+
+* add generation support for schematics ([a479fcb](https://github.com/ngneat/lib/commit/a479fcbe6b3aacf5d72a092d43d0519da35a2578))
+* add nx support ([4ab5a14](https://github.com/ngneat/lib/commit/4ab5a14c6a99a5bb14f28f912b5a95533d4a7c50))
+* add support for schematics ([be0ad15](https://github.com/ngneat/lib/commit/be0ad156e41ac4a9aec10c615831eeb2a44f8233))
+* github actions, native prompts, semantic-release ([b66facf](https://github.com/ngneat/lib/commit/b66facfc7984cbb903ec54faec6cf60ac6b5b76f))
+* **schematics:** prompts, dev deps and refactoring ([6429be8](https://github.com/ngneat/lib/commit/6429be88dff256f70a022fd4964806dc9895feb2))
+
 # Changelog
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
