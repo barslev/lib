@@ -28,7 +28,7 @@ Schematics that wrap the Angular generate library schematics and provide all the
 ## Features
 
 - 👆 **Only Single command to do everything**
-- 🗄️ **A schematic carrying scaffolding for Angular Library**
+- 📂 **A schematic carrying scaffolding for Angular Library**
 - 📄 **Contains community documents and templates which enhances open-source experiences with GitHub**
 - 📦 **Semantic release support**
 - ⚡ **GitHub Actions workflows**
