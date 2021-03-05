@@ -36,6 +36,7 @@ Schematics that wrap the Angular generate library schematics and provide all the
 - 🧑‍🤝‍🧑 **Adds All-Contributors specifications**
 - 🔐 **Commitlint, husky and lint-staged**
 - 📜 **Configures all needed scripts in package.json**
+- 🐬 **Works with NX workspace**
 
 ## Usage
 
