@@ -1,9 +1,6 @@
-name: Make a Release and Deploy on GitHub Pages
+name: Test, Build and Publish
 
-on:
-  push:
-    branches:
-      - master
+on: push
 
 jobs:
   build:
@@ -14,13 +11,15 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: "12.x"
 
-      - name: NPM install, build, and release
+      - name: NPM install, lint, build, test and release
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm ci
+          npm run lint
           npm run build
-          npx semantic-release
+          npm run test
+          npx semantic-release --debug
