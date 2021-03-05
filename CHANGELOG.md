@@ -1,3 +1,10 @@
+# [2.0.0-beta.3](https://github.com/ngneat/lib/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2021-03-05)
+
+
+### Bug Fixes
+
+* library dist path ([af43c76](https://github.com/ngneat/lib/commit/af43c76f15e0138068d7f9080361a084dcc4df7a))
+
 # [2.0.0-beta.2](https://github.com/ngneat/lib/compare/v2.0.0-beta.1...v2.0.0-beta.2) (2021-03-05)
 
 
