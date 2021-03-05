@@ -78,10 +78,13 @@ function updateKarmaConfig(host: Tree, libPath: string): Tree {
 
 function packageJSONExtensions(options: Schema, scopeWithName: string) {
   const repoUrl = options.repositoryUrl || `https://github.com/${options.name}`;
-  const depthFromRootLib = scopeWithName
-    .split("/")
-    .map(() => "..")
-    .join("/");
+  const libDistPath = scopeWithName.replace("@", "");
+  const depthFromRootLib =
+    "../" +
+    scopeWithName
+      .split("/")
+      .map(() => "..")
+      .join("/");
   const basicPkgJson = {
     version: "1.0.0",
     keywords: ["angular", "angular 2", options.name],
@@ -105,10 +108,9 @@ function packageJSONExtensions(options: Schema, scopeWithName: string) {
     ...basicPkgJson,
     schematics: "./schematics/collection.json",
     scripts: {
-      prebuild: "npm run test:schematics",
       build: "tsc -p tsconfig.schematics.json",
-      "copy:schemas": `cpx schematics/ng-add ${depthFromRootLib}/dist/ngneat/hot-toast/`,
-      "copy:collection": `cpx schematics/collection.json ${depthFromRootLib}/dist/ngneat/hot-toast/schematics/`,
+      "copy:schemas": `cpx schematics/ng-add ${depthFromRootLib}/dist/${libDistPath}/`,
+      "copy:collection": `cpx schematics/collection.json ${depthFromRootLib}/dist/${libDistPath}/schematics/`,
       postbuild: "npm run copy:schemas && npm run copy:collection",
       "test:schematics": "npm run build && jest --watch",
     },

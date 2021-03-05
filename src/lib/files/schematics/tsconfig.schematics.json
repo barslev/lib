@@ -15,7 +15,7 @@
         "noUnusedParameters": true,
         "noUnusedLocals": true,
         "rootDir": "schematics",
-        "outDir": "<%= depthFromRootLib %>/dist/<%= libDistPath %>",
+        "outDir": "<%= depthFromRootLib %>/dist/<%= libDistPath %>/schematics",
         "skipDefaultLibCheck": true,
         "skipLibCheck": true,
         "sourceMap": true,
@@ -30,6 +30,7 @@
         "schematics/**/*"
     ],
     "exclude": [
-        "schematics/*/files/**/*"
+        "schematics/*/files/**/*",
+        "schematics/**/*.spec.ts"
     ]
 }

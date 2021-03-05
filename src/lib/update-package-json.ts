@@ -26,7 +26,7 @@ function scriptsToAdd(
 
   const libsScripts = {
     deploy: `ng deploy --base-href=https://username.github.io/${libName}/`,
-    copy: `cp -r README.md dist/${distPath}`,
+    copy: `cpx README.md dist/${distPath}`,
     "build:lib": `ng build ${libName} --prod && npm run copy`,
     "test:lib": `ng test ${libName}`,
     "test:lib:headless": "cross-env CI=true npm run test:lib",

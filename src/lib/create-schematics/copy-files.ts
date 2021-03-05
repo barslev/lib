@@ -52,10 +52,12 @@ export function copyFiles(
       });
   }
 
-  const depthFromRootLib = scopeWithName
-    .split("/")
-    .map(() => "..")
-    .join("/");
+  const depthFromRootLib =
+    "../" +
+    scopeWithName
+      .split("/")
+      .map(() => "..")
+      .join("/");
 
   const libDistPath = scopeWithName.replace("@", "");
 

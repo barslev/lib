@@ -104,18 +104,21 @@ function updateLibPackage(scopeWithName: string, tree: Tree, libPath: string) {
 
   if (tree.exists(packageJSONPath)) {
     const pkg = getJSON(tree, packageJSONPath) as Record<string, any>;
-    const depthFromRootLib = scopeWithName
-      .split("/")
-      .map(() => "..")
-      .join("/");
+    const libDistPath = scopeWithName.replace("@", "");
+    const depthFromRootLib =
+      "../" +
+      scopeWithName
+        .split("/")
+        .map(() => "..")
+        .join("/");
     setJSON(tree, packageJSONPath, {
       ...pkg,
       schematics: "./schematics/collection.json",
       scripts: {
         prebuild: "npm run test:schematics",
         build: "tsc -p tsconfig.schematics.json",
-        "copy:schemas": `cpx schematics/ng-add ${depthFromRootLib}/dist/ngneat/hot-toast/`,
-        "copy:collection": `cpx schematics/collection.json ${depthFromRootLib}/dist/ngneat/hot-toast/schematics/`,
+        "copy:schemas": `cpx schematics/ng-add ../${depthFromRootLib}/dist/${libDistPath}/`,
+        "copy:collection": `cpx schematics/collection.json ../${depthFromRootLib}/dist/${libDistPath}/schematics/`,
         postbuild: "npm run copy:schemas && npm run copy:collection",
         "test:schematics": "npm run build && jest --watch",
       },

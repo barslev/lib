@@ -51,6 +51,10 @@ export function installDependencies(options: Schema): Rule {
         name: "@types/jest",
         version: "^26.0.20",
       },
+      {
+        name: "@types/jasmine",
+        version: "~3.6.0",
+      },
     ];
 
     if (!options.skipLib && !options.skipSpectator) {

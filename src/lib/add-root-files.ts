@@ -34,7 +34,7 @@ export function addFiles(
   const addCIFiles = mergeWith(
     apply(
       url(
-        `./files/ci${options.ci === "github-actions" ? "/github-actions" : ""}`
+        `./files/ci${options.ci === "github-actions" ? "/github-actions/" : "/"}`
       ),
       [
         template({
