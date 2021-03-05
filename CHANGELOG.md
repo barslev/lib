@@ -1,3 +1,10 @@
+# [2.0.0-beta.4](https://github.com/ngneat/lib/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2021-03-05)
+
+
+### Bug Fixes
+
+* angular-cli-ghpages and github workflows ([f76a527](https://github.com/ngneat/lib/commit/f76a527dc14d41b9ba1e4add9147f9e2b446a700))
+
 # [2.0.0-beta.3](https://github.com/ngneat/lib/compare/v2.0.0-beta.2...v2.0.0-beta.3) (2021-03-05)
 
 
