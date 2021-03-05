@@ -94,9 +94,8 @@ const libWOSchematicsResultFiles = [
   "/logo.svg",
   "/PULL_REQUEST_TEMPLATE.md",
   "/hooks/pre-commit.js",
-  "/.github/workflows/release-beta.yml",
   "/.github/workflows/release.yml",
-  "/.github/workflows/test.yml",
+  "/.github/workflows/deploy.yml",
 ];
 
 const resultFiles = [...libWOSchematicsResultFiles, ...schematicResultFiles];
