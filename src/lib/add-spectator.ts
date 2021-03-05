@@ -14,7 +14,7 @@ import { Schema } from "./schema";
 
 export function addSpectator(options: Schema, scopeWithName: string): Rule {
   return (tree: Tree, context: SchematicContext) => {
-    context.logger.info("🕵️‍♀️ Adding @ngneat/spectator...");
+    context.logger.info("⌛ Adding @ngneat/spectator...");
     const module = tree.actions.find(
       (action) => !!action.path.match(/\.module\.ts/)
     );

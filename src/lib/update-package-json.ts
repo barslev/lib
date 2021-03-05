@@ -89,6 +89,8 @@ export function updatePackageJson(
         !!options.skipLib,
         options.skipSchematics
       ),
+      ...(json.scripts["lint"] ? undefined : { lint: "ng lint" }),
+      ...(json.scripts["test"] ? undefined : { test: "ng test" }),
     };
     json["husky"] = generateHooks();
 

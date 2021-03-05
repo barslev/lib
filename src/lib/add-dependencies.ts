@@ -57,10 +57,17 @@ export function installDependencies(options: Schema): Rule {
       },
     ];
 
-    if (!options.skipLib && !options.skipSpectator) {
-      // install spectator synchronously so we can use it for external schematics command later on.
-      execSync("npm install --save-dev @ngneat/spectator");
-      deps.push({ name: "@ngneat/spectator", version: "^7.0.0" });
+    if (!options.skipLib) {
+      if (!options.skipSpectator) {
+        // install spectator synchronously so we can use it for external schematics command later on.
+        execSync("npm install --save-dev @ngneat/spectator");
+        deps.push({ name: "@ngneat/spectator", version: "^7.0.0" });
+      }
+      if (!options.skipAngularCliGhPages) {
+        // install angular-cli-ghpages synchronously so we can use it for external schematics command later on.
+        execSync("npm install --save-dev angular-cli-ghpages");
+        deps.push({ name: "angular-cli-ghpages", version: "^1.0.0-rc.1" });
+      }
     }
 
     const addPackageToPackageJson = addPackageToPackageJsonFactory(
@@ -73,7 +80,7 @@ export function installDependencies(options: Schema): Rule {
     });
 
     context.addTask(new NodePackageInstallTask());
-    context.logger.log("info", "🔍 Adding packages...");
+    context.logger.log("info", "⌛ Adding packages...");
 
     return host;
   };
