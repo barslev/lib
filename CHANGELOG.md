@@ -1,3 +1,10 @@
+# [2.0.0-beta.6](https://github.com/ngneat/lib/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2021-03-07)
+
+
+### Bug Fixes
+
+* **schematics:** remove spec file from files ([f5ea0cc](https://github.com/ngneat/lib/commit/f5ea0ccd9f67e0edfe3db32916682bb437cc4615))
+
 # [2.0.0-beta.5](https://github.com/ngneat/lib/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2021-03-07)
 
 
