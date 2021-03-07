@@ -1,3 +1,10 @@
+# [2.0.0-beta.5](https://github.com/ngneat/lib/compare/v2.0.0-beta.4...v2.0.0-beta.5) (2021-03-07)
+
+
+### Bug Fixes
+
+* generate a release ([5d08b39](https://github.com/ngneat/lib/commit/5d08b39c61f430dcfbb982bd763701705e2f0ebc))
+
 # [2.0.0-beta.4](https://github.com/ngneat/lib/compare/v2.0.0-beta.3...v2.0.0-beta.4) (2021-03-05)
 
 
