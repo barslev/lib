@@ -120,7 +120,6 @@ function updateLibPackage(scopeWithName: string, tree: Tree, libPath: string) {
         "copy:schemas": `cpx schematics/ng-add ../${depthFromRootLib}/dist/${libDistPath}/`,
         "copy:collection": `cpx schematics/collection.json ../${depthFromRootLib}/dist/${libDistPath}/schematics/`,
         postbuild: "npm run copy:schemas && npm run copy:collection",
-        "test:schematics": "npm run build && jest --watch",
       },
     });
   }

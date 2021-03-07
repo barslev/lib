@@ -61,7 +61,6 @@ const defaultCreateSchematicsOptions: CreateSchematicsOptions = {
 const schematicResultFiles = [
   "/projects/scope/toaster/tsconfig.schematics.json",
   "/projects/scope/toaster/schematics/collection.json",
-  "/projects/scope/toaster/schematics/ng-add/index.spec.ts",
   "/projects/scope/toaster/schematics/ng-add/index.ts",
   "/projects/scope/toaster/schematics/ng-add/schema.json",
   "/projects/scope/toaster/schematics/ng-add/schema.ts",
