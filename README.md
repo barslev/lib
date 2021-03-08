@@ -42,6 +42,8 @@ ng add @ngneat/lib @scope/toaster # change @scope/toaster with your lib name
 - 📜 **Configures all needed scripts in package.json**
 - 🐬 **Works with NX workspace**
 
+## Table of Content <!-- omit in toc -->
+
 - [Usage](#usage)
   - [Create library with schematics](#create-library-with-schematics)
   - [Generate schematics in existing library](#generate-schematics-in-existing-library)
