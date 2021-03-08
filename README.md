@@ -21,7 +21,7 @@
 
 <br >
 
-# @ngneat/ <!-- omit in toc -->
+# @ngneat/lib <!-- omit in toc -->
 
 Schematics that wrap the Angular generate library schematics and provide all the standard boilerplate you need in order to create a neat Angular open-source project.
 
