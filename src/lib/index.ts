@@ -6,7 +6,7 @@ import {
   noop,
 } from "@angular-devkit/schematics";
 import { Observable } from "rxjs";
-import { getLibPath } from "../utils/helpers";
+import { getLibPath, splitScopeFromName } from "../utils/helpers";
 
 import { installDependencies } from "./add-dependencies";
 import { addAngularCliGhPages } from "./add-ng-cli-ghpages";
@@ -24,22 +24,13 @@ function rulify(obj: Tree | Observable<Tree> | Rule | null): Rule {
   return rule as Rule;
 }
 
-function splitScopeFromName(options: Schema): Schema {
-  if (!options.scope && options.name.includes("/")) {
-    const splittedNameAndScope = options.name.split("/");
-    options.scope = splittedNameAndScope[0];
-    options.name = splittedNameAndScope[1];
-  }
-  return options;
-}
-
 export function lib(options: Schema): Rule {
   return (tree: Tree, _context: SchematicContext) => {
     if (tree.exists("README.md")) {
       tree.delete("README.md");
     }
 
-    options = splitScopeFromName(options);
+    options = splitScopeFromName(options) as Schema;
 
     const scopeWithName = options.scope
       ? `${options.scope}/${options.name}`

@@ -30,7 +30,7 @@ export const hasNgModuleImport = (tree: Tree, modulePath: string, className: str
     throw new Error(`Could not find NgModule declaration inside: "${modulePath}"`);
   }
 
-  for (const property of ngModuleMetadata!.properties) {
+  for (const property of ngModuleMetadata.properties) {
     if (
       !ts.isPropertyAssignment(property) ||
       property.name.getText() !== 'imports' ||

@@ -3,7 +3,7 @@ import { addPackageToPackageJsonFactory } from "../../utils/package";
 
 export function installSchematicsDependencies(
   host: Tree,
-  onlySchematics = false
+  onlySchematics = false,
 ): void {
   const addPackageToPackageJson = addPackageToPackageJsonFactory(
     host,

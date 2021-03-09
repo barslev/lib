@@ -10,7 +10,11 @@ import { workspaces } from "@angular-devkit/core";
 import { Schema } from "../schema";
 import { Schema as CreateSchematicsSchema } from "./schema";
 import { installSchematicsDependencies } from "./add-dependencies";
-import { createHost, getLibPath } from "../../utils/helpers";
+import {
+  createHost,
+  getLibPath,
+  splitScopeFromName,
+} from "../../utils/helpers";
 import { getPrompts } from "./prompts";
 import { copyFiles } from "./copy-files";
 import { NodePackageInstallTask } from "@angular-devkit/schematics/tasks";
@@ -55,6 +59,7 @@ export function createSchematicsWithLib(
 
 export function createSchematics(options: CreateSchematicsSchema): Rule {
   return async (tree: Tree, context: SchematicContext) => {
+    options = splitScopeFromName(options);
     const scopeWithName = options.scope
       ? `${options.scope}/${options.name}`
       : options.name;

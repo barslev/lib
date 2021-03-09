@@ -4,22 +4,12 @@
 
 > Lets you focus on the stuff that matters
 
-<br />
-
-[![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?style=flat-square)]()
-[![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)]()
-[![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
+[![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?style=flat-square)](https://github.com/ngneat/lib/blob/master/LICENSE)
+[![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)](https://github.com/ngneat/lib/commits/master)
+[![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](https://github.com/ngneat/lib/pulls)
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors)
 [![ngneat](https://img.shields.io/badge/@-ngneat-383636?style=flat-square&labelColor=8f68d4)](https://github.com/ngneat/)
-
-
-
-<br >
-
-![Demo](demo.gif)
-
-<br >
 
 # @ngneat/lib <!-- omit in toc -->
 
@@ -54,6 +44,7 @@ ng add @ngneat/lib @scope/toaster # change @scope/toaster with your lib name
     - [Running the library locally](#running-the-library-locally)
   - [Schematics Development](#schematics-development)
     - [Running schematics locally](#running-schematics-locally)
+  - [Change `base-href` for deployment](#change-base-href-for-deployment)
   - [Commit messages](#commit-messages)
   - [Releases](#releases)
     - [Automated releases with GitHub Actions](#automated-releases-with-github-actions)
@@ -157,6 +148,19 @@ To run and test schematics, you can follow below steps:
 3. Pack the library using npm: `npm pack` and it will create a `.tgz` file
 4. Open the new terminal and go to another Angular project where you want to test
 5. Run `ng add /path/to/.tgz/file` in new terminal
+
+### Change `base-href` for deployment
+
+Make sure to change `--base-href` in `deploy` script of `package.json`.
+
+```json
+{
+  "scripts": {
+    "deploy": "ng deploy --base-href=https://username.github.io/lib-name/",
+  },
+}
+
+```
 
 ### Commit messages
 

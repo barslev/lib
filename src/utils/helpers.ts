@@ -6,6 +6,8 @@ import {
 } from "@angular-devkit/schematics";
 import { Tree } from "@angular-devkit/schematics/src/tree/interface";
 import { isObservable, from, of, Observable } from "rxjs";
+import { Schema } from "../lib/schema";
+import { Schema as CreateSchematicsSchema } from "../lib/create-schematics/schema";
 
 export function isFunction(val: any): boolean {
   return typeof val === "function";
@@ -56,4 +58,15 @@ export function createHost(tree: Tree): workspaces.WorkspaceHost {
 
 export function getLibPath(scopeWithName: string, isNx: boolean) {
   return `${isNx ? "libs" : "projects"}/${scopeWithName}`.replace("@", "");
+}
+
+export function splitScopeFromName(
+  options: Schema | CreateSchematicsSchema
+): Schema | CreateSchematicsSchema {
+  if (!options.scope && options.name.includes("/")) {
+    const splittedNameAndScope = options.name.split("/");
+    options.scope = splittedNameAndScope[0];
+    options.name = splittedNameAndScope[1];
+  }
+  return options;
 }

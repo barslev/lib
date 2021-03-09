@@ -1,7 +1,17 @@
-import { Rule, SchematicContext, Tree, SchematicsException, chain } from '@angular-devkit/schematics';
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
+import {
+  Rule,
+  SchematicContext,
+  Tree,
+  SchematicsException,
+  chain,
+} from '@angular-devkit/schematics';
 import { NodePackageInstallTask } from '@angular-devkit/schematics/tasks';
 import { getAppModulePath } from '@schematics/angular/utility/ng-ast-utils';
-import { insertImport, isImported } from '@schematics/angular/utility/ast-utils';
+import {
+  insertImport,
+  isImported,
+} from '@schematics/angular/utility/ast-utils';
 import { InsertChange } from '@schematics/angular/utility/change';
 
 import { Schema } from './schema';
@@ -15,13 +25,19 @@ import {
 import { targetBuildNotFoundError } from './utils/project-targets';
 import { hasNgModuleImport } from './utils/ng-module-imports';
 
-const importModuleSet: { moduleName: string; importModuleStatement: string; importPath: string }[] = <%= importModuleSet %>;
+const importModuleSet: {
+  moduleName: string;
+  importModuleStatement: string;
+  importPath: string;
+}[] = <%= importModuleSet %>;
 
 export function ngAdd(options: Schema): Rule {
   return (tree: Tree) => {
     const workspaceConfig = tree.read('/angular.json');
     if (!workspaceConfig) {
-      throw new SchematicsException('Could not find Angular workspace configuration');
+      throw new SchematicsException(
+        'Could not find Angular workspace configuration'
+      );
     }
     return chain([
       addPackageJsonDependencies(),
@@ -34,7 +50,7 @@ export function ngAdd(options: Schema): Rule {
 
 function addPackageJsonDependencies(): Rule {
   return (host: Tree, context: SchematicContext) => {
-    const dependencies: { name: string; version: string }[] = <%= packagesWithVersion %>;
+    const dependencies: { name: string; version: string }[] = [];
 
     dependencies.forEach((dependency) => {
       addPackageToPackageJson(host, dependency.name, `${dependency.version}`);
@@ -64,7 +80,9 @@ function injectImports(options: Schema): Rule {
       );
 
       if (!project || project.projectType !== 'application') {
-        throw new SchematicsException(`A client project type of "application" is required.`);
+        throw new SchematicsException(
+          `A client project type of "application" is required.`
+        );
       }
 
       if (
@@ -76,20 +94,36 @@ function injectImports(options: Schema): Rule {
         throw targetBuildNotFoundError();
       }
 
-      const modulePath = getAppModulePath(host, project.architect.build.options.main);
+      const modulePath = getAppModulePath(
+        host,
+        project.architect.build.options.main
+      );
       const moduleSource = getSourceFile(host, modulePath);
 
       importModuleSet.forEach((item) => {
         if (isImported(moduleSource, item.moduleName, item.importPath)) {
-          context.logger.warn(`Could not import "${item.moduleName}" because it's already imported.`);
+          context.logger.warn(
+            `Could not import "${item.moduleName}" because it's already imported.`
+          );
         } else {
-          const change = insertImport(moduleSource, modulePath, item.moduleName, item.importPath);
+          const change = insertImport(
+            moduleSource,
+            modulePath,
+            item.moduleName,
+            item.importPath
+          );
 
           if (change) {
             const recorder = host.beginUpdate(modulePath);
-            recorder.insertLeft((change as InsertChange).pos, (change as InsertChange).toAdd);
+            recorder.insertLeft(
+              (change as InsertChange).pos,
+              (change as InsertChange).toAdd
+            );
             host.commitUpdate(recorder);
-            context.logger.log('info', '✅ Written import statement for "' + item.moduleName + '"');
+            context.logger.log(
+              'info',
+              '✅ Written import statement for "' + item.moduleName + '"'
+            );
           }
         }
       });
@@ -108,23 +142,42 @@ function addModuleToImports(options: Schema): Rule {
       );
 
       if (!project || project.projectType !== 'application') {
-        throw new SchematicsException(`A client project type of "application" is required.`);
+        throw new SchematicsException(
+          `A client project type of "application" is required.`
+        );
       }
       if (!project.architect) {
-        throw new SchematicsException(`Architect options not present for project.`);
+        throw new SchematicsException(
+          `Architect options not present for project.`
+        );
       }
       if (!project.architect.build) {
-        throw new SchematicsException(`Architect:Build options not present for project.`);
+        throw new SchematicsException(
+          `Architect:Build options not present for project.`
+        );
       }
 
-      const modulePath = getAppModulePath(host, project.architect.build.options.main);
+      const modulePath = getAppModulePath(
+        host,
+        project.architect.build.options.main
+      );
 
       importModuleSet.forEach((item) => {
         if (hasNgModuleImport(host, modulePath, item.moduleName)) {
-          context.logger.warn(`Could not set up "${item.moduleName}" in "imports[]" because it's already imported.`);
+          context.logger.warn(
+            `Could not set up "${item.moduleName}" in "imports[]" because it's already imported.`
+          );
         } else {
-          addModuleImportToRootModule(host, item.importModuleStatement, null as any, project);
-          context.logger.log('info', '✅ Imported "' + item.moduleName + '" in imports');
+          addModuleImportToRootModule(
+            host,
+            item.importModuleStatement,
+            null as any,
+            project
+          );
+          context.logger.log(
+            'info',
+            '✅ Imported "' + item.moduleName + '" in imports'
+          );
         }
       });
     }

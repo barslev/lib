@@ -31,7 +31,9 @@ export function copyFiles(
             importPath: scopeWithName,
           },
         ]
-      : []
+      : [],
+    null,
+    2
   );
 
   let packagesWithVersion: { name: string; version: string }[] = [];
