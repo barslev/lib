@@ -1,3 +1,10 @@
+# [2.0.0-beta.8](https://github.com/ngneat/lib/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2021-03-09)
+
+
+### Features
+
+* **lint-fix:** perform lint-fix after adding the library ([3986cd0](https://github.com/ngneat/lib/commit/3986cd012505fa7bfe7614bdcab561f15712f970))
+
 # [2.0.0-beta.7](https://github.com/ngneat/lib/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2021-03-09)
 
 
