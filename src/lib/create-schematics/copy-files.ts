@@ -11,6 +11,7 @@ import {
 import { normalize, strings, workspaces } from "@angular-devkit/core";
 import { Schema } from "../schema";
 import { Schema as CreateSchematicsSchema } from "./schema";
+import * as stringifyObject from "stringify-object";
 
 export function copyFiles(
   importModule: boolean,
@@ -22,7 +23,7 @@ export function copyFiles(
   project: workspaces.ProjectDefinition,
   onlySchematics = false
 ): Source {
-  const importModuleSet = JSON.stringify(
+  const importModuleSet = stringifyObject(
     importModule
       ? [
           {
@@ -32,8 +33,7 @@ export function copyFiles(
           },
         ]
       : [],
-    null,
-    2
+    { singleQuotes: true, indent: "  " }
   );
 
   let packagesWithVersion: { name: string; version: string }[] = [];
@@ -70,7 +70,10 @@ export function copyFiles(
       classify: strings.classify,
       scopeWithName,
       importStatement,
-      packagesWithVersion: JSON.stringify(packagesWithVersion),
+      packagesWithVersion: stringifyObject(packagesWithVersion, {
+        singleQuotes: true,
+        indent: "  ",
+      }),
       importModuleSet,
       parse: JSON.parse,
       depthFromRootLib,

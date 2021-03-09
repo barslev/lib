@@ -4,19 +4,33 @@ import * as ts from 'typescript';
 /**
  * Whether the Angular module in the given path imports the specifed module class name.
  */
-export const hasNgModuleImport = (tree: Tree, modulePath: string, className: string): boolean => {
+export const hasNgModuleImport = (
+  tree: Tree,
+  modulePath: string,
+  className: string
+): boolean => {
   const moduleFileContent = tree.read(modulePath);
 
   if (!moduleFileContent) {
     throw new Error(`Could not read Angular module file: ${modulePath}`);
   }
 
-  const parsedFile = ts.createSourceFile(modulePath, moduleFileContent.toString(), ts.ScriptTarget.Latest, true);
+  const parsedFile = ts.createSourceFile(
+    modulePath,
+    moduleFileContent.toString(),
+    ts.ScriptTarget.Latest,
+    true
+  );
   let ngModuleMetadata: ts.ObjectLiteralExpression | null = null;
 
   const findModuleDecorator = (node: ts.Node) => {
-    if (ts.isDecorator(node) && ts.isCallExpression(node.expression) && isNgModuleCallExpression(node.expression)) {
-      ngModuleMetadata = node.expression.arguments[0] as ts.ObjectLiteralExpression;
+    if (
+      ts.isDecorator(node) &&
+      ts.isCallExpression(node.expression) &&
+      isNgModuleCallExpression(node.expression)
+    ) {
+      ngModuleMetadata = node.expression
+        .arguments[0] as ts.ObjectLiteralExpression;
 
       return;
     }
@@ -27,7 +41,9 @@ export const hasNgModuleImport = (tree: Tree, modulePath: string, className: str
   ts.forEachChild(parsedFile, findModuleDecorator);
 
   if (!ngModuleMetadata) {
-    throw new Error(`Could not find NgModule declaration inside: "${modulePath}"`);
+    throw new Error(
+      `Could not find NgModule declaration inside: "${modulePath}"`
+    );
   }
 
   for (const property of ngModuleMetadata.properties) {
@@ -39,7 +55,11 @@ export const hasNgModuleImport = (tree: Tree, modulePath: string, className: str
       continue;
     }
 
-    if (property.initializer.elements.some(element => element.getText().includes(className))) {
+    if (
+      property.initializer.elements.some((element) =>
+        element.getText().includes(className)
+      )
+    ) {
       return true;
     }
   }
@@ -51,7 +71,9 @@ export const hasNgModuleImport = (tree: Tree, modulePath: string, className: str
  * Resolves the last identifier that is part of the given expression. This helps resolving
  * identifiers of nested property access expressions (e.g. myNamespace.core.NgModule).
  */
-const resolveIdentifierOfExpression = (expression: ts.Expression): ts.Identifier | null => {
+const resolveIdentifierOfExpression = (
+  expression: ts.Expression
+): ts.Identifier | null => {
   if (ts.isIdentifier(expression)) {
     return expression;
   } else if (ts.isPropertyAccessExpression(expression)) {
@@ -62,7 +84,9 @@ const resolveIdentifierOfExpression = (expression: ts.Expression): ts.Identifier
 };
 
 /** Whether the specified call expression is referring to a NgModule definition. */
-const isNgModuleCallExpression = (callExpression: ts.CallExpression): boolean => {
+const isNgModuleCallExpression = (
+  callExpression: ts.CallExpression
+): boolean => {
   if (
     !(callExpression.arguments && callExpression.arguments.length) ||
     !ts.isObjectLiteralExpression(callExpression.arguments[0])
@@ -70,7 +94,9 @@ const isNgModuleCallExpression = (callExpression: ts.CallExpression): boolean =>
     return false;
   }
 
-  const decoratorIdentifier = resolveIdentifierOfExpression(callExpression.expression);
+  const decoratorIdentifier = resolveIdentifierOfExpression(
+    callExpression.expression
+  );
 
   return decoratorIdentifier ? decoratorIdentifier.text === 'NgModule' : false;
 };

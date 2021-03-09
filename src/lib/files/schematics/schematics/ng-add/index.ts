@@ -1,4 +1,3 @@
-/* eslint-disable prefer-arrow/prefer-arrow-functions */
 import {
   Rule,
   SchematicContext,
@@ -50,7 +49,7 @@ export function ngAdd(options: Schema): Rule {
 
 function addPackageJsonDependencies(): Rule {
   return (host: Tree, context: SchematicContext) => {
-    const dependencies: { name: string; version: string }[] = [];
+    const dependencies: { name: string; version: string }[] = <%= packagesWithVersion %>;
 
     dependencies.forEach((dependency) => {
       addPackageToPackageJson(host, dependency.name, `${dependency.version}`);

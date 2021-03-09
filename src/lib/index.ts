@@ -14,6 +14,7 @@ import { addFiles } from "./add-root-files";
 import { addSpectator } from "./add-spectator";
 import { createLib } from "./create-lib";
 import { createSchematicsWithLib } from "./create-schematics";
+import { lintFix } from "./lint-fix";
 import { Schema } from "./schema";
 import { updatePackageJson } from "./update-package-json";
 
@@ -66,6 +67,8 @@ export function lib(options: Schema): Rule {
       ? noop()
       : addAngularCliGhPages();
 
+    const lintFixRule = lintFix(scopeWithName);
+
     return chain([
       libRule,
       filesRule,
@@ -74,6 +77,7 @@ export function lib(options: Schema): Rule {
       installDepsRule,
       addSpectatorRule,
       angularCliGhPagesRule,
+      lintFixRule,
     ]);
   };
 }

@@ -61,7 +61,7 @@ export function installDependencies(options: Schema): Rule {
       if (!options.skipSpectator) {
         // install spectator synchronously so we can use it for external schematics command later on.
         execSync("npm install --silent --save-dev @ngneat/spectator", { windowsHide: true });
-        deps.push({ name: "@ngneat/spectator", version: "^7.0.0" });
+        deps.push({ name: "@ngneat/spectator", version: "^7.1.0" });
       }
       if (!options.skipAngularCliGhPages) {
         // install angular-cli-ghpages synchronously so we can use it for external schematics command later on.
