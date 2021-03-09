@@ -1,3 +1,10 @@
+# [2.0.0-beta.7](https://github.com/ngneat/lib/compare/v2.0.0-beta.6...v2.0.0-beta.7) (2021-03-09)
+
+
+### Bug Fixes
+
+* silent npm scripts, update docs and refactoring for eslint/prettier ([4c5621e](https://github.com/ngneat/lib/commit/4c5621e0d89ffe047d2cdffa14449e5f868ea804))
+
 # [2.0.0-beta.6](https://github.com/ngneat/lib/compare/v2.0.0-beta.5...v2.0.0-beta.6) (2021-03-07)
 
 
