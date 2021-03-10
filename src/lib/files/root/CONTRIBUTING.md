@@ -2,7 +2,7 @@
 
 🙏 We would ❤️ for you to contribute to <%= capitalize(name) %> and help make it even better than it is today!
 
-# Developing
+## Developing
 
 Start by installing all dependencies:
 

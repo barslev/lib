@@ -22,7 +22,9 @@
     "ci": {
       "description": "Determine which CI tool to use.",
       "type": "string",
-      "default": "travis"
+      "enum": ["github-actions", "travis", "circle"],
+      "default": "github-actions",
+      "x-prompt": "Which CI would you like to use?"
     },
     "repositoryUrl": {
       "description": "The repository Url",
@@ -61,12 +63,53 @@
       "default": false,
       "description": "When true, does not update \"tsconfig.json\" to add a path mapping for the new library. The path mapping is needed to use the library in an app, but can be disabled here to simplify development."
     },
-    "lintFix": {
+    "skipSchematics": {
       "type": "boolean",
       "default": false,
-      "description": "When true, applies lint fixes after generating the library.",
-      "x-user-analytics": 15
+      "description": "When true, does not set schematics to support \"ng add ...\" command"
+    },
+    "skipAngularCliGhPages": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, skips setting angular-cli-ghpages configurations"
+    },
+    "botName": {
+      "type": "string",
+      "default": "",
+      "description": "This name will be used while deploying on GitHub Pages",
+      "x-prompt": "What name should we use for deploying on GitHub Pages? (e.g. Mr. X's Bot)"
+    },
+    "botEmail": {
+      "type": "string",
+      "default": "",
+      "description": "This email will be used while deploying on GitHub Pages",
+      "x-prompt": "What email should we use for deploying on GitHub Pages?"
+    },
+    "skipSpectator": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, does not add @ngneat/spectator"
+    },
+    "skipPrompts": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, skips prompts"
+    },
+    "importModule": {
+      "type": "boolean",
+      "default": false,
+      "description": "When true, \"ng add ...\" command will import your module in client. Works only if skipPrompts is true"
+    },
+    "importStatement": {
+      "type": "string",
+      "default": "",
+      "description": "The import statement when run through ng add. Works only if importModule is true"
+    },
+    "packages": {
+      "type": "array",
+      "default": [],
+      "description": "3rd party packages to add when run through ng add. Works only if skipPrompts is true"
     }
   },
-  "required": []
+  "required": ["name"]
 }

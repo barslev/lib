@@ -1,24 +1,30 @@
 {
   "compilerOptions": {
     "baseUrl": "tsconfig",
-    "lib": ["es2017", "dom"],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
     "declaration": true,
     "module": "commonjs",
     "moduleResolution": "node",
     "noEmitOnError": true,
     "noFallthroughCasesInSwitch": true,
-    "noImplicitAny": false,
-    "noImplicitThis": false,
-    "noUnusedParameters": false,
-    "noUnusedLocals": false,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
     "rootDir": "src/",
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "sourceMap": true,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "target": "es6",
-    "types": ["jest", "node"]
+    "types": [
+      "jest",
+      "node"
+    ]
   },
   "include": ["src/**/*"],
-  "exclude": ["src/*/files/**/*", "src/test/**/*"]
+  "exclude": ["src/*/files/**/*", "src/**/*.spec.ts"]
 }

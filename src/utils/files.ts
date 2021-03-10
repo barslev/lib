@@ -1,23 +1,27 @@
-import {SchematicsException, Tree} from '@angular-devkit/schematics';
-import * as fs from 'fs';
+import { SchematicsException, Tree } from "@angular-devkit/schematics";
+import * as fs from "fs";
 
 function throwPathNotFound(path: string): never {
   throw new SchematicsException(`Could not find ${path}`);
 }
 
 export function readFileFromFS(path: string): string {
-  return fs.readFileSync(path, {encoding: 'utf-8'})
+  return fs.readFileSync(path, { encoding: "utf-8" });
 }
 
 export function readFile(host: Tree, path: string): string {
-  return host.read(path)!.toString('utf-8');
+  const buffer = host.read(path);
+  if (buffer) {
+    return buffer.toString("utf-8");
+  }
+  throwPathNotFound(path);
 }
 
-export function writeFile(path: string, content: string, host: Tree) {
+export function writeFile(path: string, content: string, host: Tree): void {
   host.overwrite(path, content);
 }
 
-export function getJSON<T = any>(host: Tree, path: string): T {
+export function getJSON<T>(host: Tree, path: string): T {
   if (!host.exists(path)) {
     throwPathNotFound(path);
   }
@@ -25,7 +29,7 @@ export function getJSON<T = any>(host: Tree, path: string): T {
   return JSON.parse(sourceText);
 }
 
-export function getJSONFromFS<T = any>(path: string): T {
+export function getJSONFromFS<T>(path: string): T {
   if (!fs.existsSync(path)) {
     throwPathNotFound(path);
   }
@@ -33,7 +37,11 @@ export function getJSONFromFS<T = any>(path: string): T {
   return JSON.parse(sourceText);
 }
 
-export function setJSON(host: Tree, path: string, content: object): Tree {
+export function setJSON(
+  host: Tree,
+  path: string,
+  content: Record<string, unknown>
+): Tree {
   host.overwrite(path, JSON.stringify(content, null, 2));
 
   return host;

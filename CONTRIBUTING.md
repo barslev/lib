@@ -2,7 +2,7 @@
 
 🙏 We would ❤️ for you to contribute to Lib and help make it even better than it is today!
 
-# Developing
+## Developing
 
 Start by installing all dependencies:
 
@@ -14,13 +14,19 @@ Run the tests:
 
 ```bash
 npm test
-npm run e2e
 ```
 
 Run the playground app:
 
 ```bash
-npm start
+npm run link:start
+```
+
+Go to your dummy project in which you want to test this lib:
+
+```bash
+npm link @ngneat/lib
+ng add @ngneat/lib @scope/libName
 ```
 
 ## Building
