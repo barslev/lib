@@ -37,22 +37,6 @@ export function installSchematicsDependencies(
       },
     ];
     deps = deps.concat(semanticReleaseDeps);
-  } else {
-    const jestDeps = [
-      {
-        name: "jest",
-        version: "^26.6.3",
-      },
-      {
-        name: "ts-jest",
-        version: "^26.5.2",
-      },
-      {
-        name: "@types/jest",
-        version: "^26.0.20",
-      },
-    ];
-    deps = deps.concat(jestDeps);
   }
 
   deps.forEach((dep) => {

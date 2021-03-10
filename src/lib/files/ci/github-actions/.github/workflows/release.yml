@@ -1,4 +1,4 @@
-name: Test, Build and Publish
+name: Publish the library
 
 on: push
 
@@ -21,7 +21,6 @@ jobs:
           npm ci
           npm run lint
           npm run build -- --prod
-          npm run test
+          npm run test -- --watch=false --browsers=ChromeHeadless
           npm run build:lib
           npx semantic-release --debug
-          npm run deploy -- --no-silent --name="<%= botName %>" --email=<%= botEmail %>

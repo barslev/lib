@@ -48,8 +48,8 @@ export function copyFiles(
           );
         }
         return {
-          name: i.substr(lastIndex + 1),
-          version: i.substr(0, lastIndex),
+          name: i.substr(0, lastIndex),
+          version: i.substr(lastIndex + 1),
         };
       });
   }

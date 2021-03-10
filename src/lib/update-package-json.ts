@@ -25,7 +25,7 @@ function scriptsToAdd(
   const distPath = libName.replace("@", "");
 
   const libsScripts = {
-    deploy: `ng deploy --base-href=https://username.github.io/${libName}/`,
+    deploy: `ng deploy --base-href=https://username.github.io/repo/`,
     copy: `cpx README.md dist/${distPath}`,
     "build:lib": `ng build ${libName} --prod && npm run copy`,
     "test:lib": `ng test ${libName}`,

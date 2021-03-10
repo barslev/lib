@@ -28,9 +28,10 @@ ng add @ngneat/lib @scope/toaster # change @scope/toaster with your lib name
 - ⚡ **GitHub Actions workflows**
 - 🚀 **Site Deployment with angular-cli-ghpages**
 - 🧑‍🤝‍🧑 **Adds All-Contributors specifications**
-- 🔐 **Commitlint, husky and lint-staged**
+- 🔐 **Sets up Commitlint, husky, prettier and lint-staged**
 - 📜 **Configures all needed scripts in package.json**
 - 🐬 **Works with NX workspace**
+- ✨ **Lints newly created library project**
 
 ## Table of Content <!-- omit in toc -->
 
@@ -156,7 +157,7 @@ Make sure to change `--base-href` in `deploy` script of `package.json`.
 ```json
 {
   "scripts": {
-    "deploy": "ng deploy --base-href=https://username.github.io/lib-name/",
+    "deploy": "ng deploy --base-href=https://username.github.io/repo/",
   },
 }
 
@@ -238,23 +239,24 @@ You can simply run `npm run deploy` to deploy your default project on GitHub pag
 To summarize with steps, below is what all you need to do:
 
 1. Create new project using Angular CLI
-2. Create library in it using `ng add @ngneat/lib libName`
-3. Develop your library
-4. Write specs
-5. Test your code in the project itself
-6. Run `npm run test:lib`
-7. Run `npm run build:lib`
-8. Test the schematics
-9. Run `npm run commit`
-10. Push
-11. Let GitHub Actions finish running tests and releases, thanks to semantic-release
-12. And you're done with first release!
-13. Make new branch (name can be `alpha`, `beta`, `next`, `next-major`)
-14. Repeat steps 3 to 11
-15. Install and test your library from distribution channels, e.g. `npm install libName@beta` or with schematics: `ng add libName@beta`
-16. Once tested, merge with `master`
-17. Let GitHub Actions finish running tests and releases, thanks to semantic-release
-18. And you're done with next release!
+2. Create library in it using `ng add @ngneat/lib @scope/libName`
+3. Change `--base-href` of `deploy` script in root `package.json`
+4. Develop your library
+5. Write specs
+6. Test your code in the project itself
+7. Run `npm run test:lib`
+8. Run `npm run build:lib`
+9. Test the schematics
+10. Run `npm run commit`
+11. Push
+12. Let GitHub Actions finish running tests and releases
+13. And you're done with first release!
+14. Make new branch (name can be `alpha`, `beta`, `next`, `next-major`)
+15. Repeat steps 4 to 12
+16. Install and test your library from distribution channels, e.g. `npm install @scope/libName@beta` or with schematics: `ng add @scope/libName@beta`
+17. Once tested, merge with `master`
+18. Again, let GitHub Actions finish running tests and releases
+19. And you're done with next release!
 
 ## Files
 

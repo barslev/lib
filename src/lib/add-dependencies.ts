@@ -40,18 +40,6 @@ export function installDependencies(options: Schema): Rule {
         version: "^7.0.3",
       },
       {
-        name: "jest",
-        version: "^26.6.3",
-      },
-      {
-        name: "ts-jest",
-        version: "^26.5.2",
-      },
-      {
-        name: "@types/jest",
-        version: "^26.0.20",
-      },
-      {
         name: "@types/jasmine",
         version: "~3.6.0",
       },

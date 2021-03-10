@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: '12.x'
 
-      - name: NPM install, lint, build, test and release
+      - name: NPM install, build and deploy
         env:
             GH_TOKEN: ${{ secrets.GH_TOKEN }}
             NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

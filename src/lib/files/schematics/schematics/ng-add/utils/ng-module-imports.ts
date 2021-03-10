@@ -40,30 +40,30 @@ export const hasNgModuleImport = (
 
   ts.forEachChild(parsedFile, findModuleDecorator);
 
-  if (!ngModuleMetadata) {
+  if (ngModuleMetadata) {
+    for (const property of (ngModuleMetadata as ts.ObjectLiteralExpression)
+      .properties) {
+      if (
+        !ts.isPropertyAssignment(property) ||
+        property.name.getText() !== 'imports' ||
+        !ts.isArrayLiteralExpression(property.initializer)
+      ) {
+        continue;
+      }
+
+      if (
+        property.initializer.elements.some((element) =>
+          element.getText().includes(className)
+        )
+      ) {
+        return true;
+      }
+    }
+  } else {
     throw new Error(
       `Could not find NgModule declaration inside: "${modulePath}"`
     );
   }
-
-  for (const property of ngModuleMetadata.properties) {
-    if (
-      !ts.isPropertyAssignment(property) ||
-      property.name.getText() !== 'imports' ||
-      !ts.isArrayLiteralExpression(property.initializer)
-    ) {
-      continue;
-    }
-
-    if (
-      property.initializer.elements.some((element) =>
-        element.getText().includes(className)
-      )
-    ) {
-      return true;
-    }
-  }
-
   return false;
 };
 
