@@ -1,3 +1,10 @@
+# [2.0.0-beta.9](https://github.com/ngneat/lib/compare/v2.0.0-beta.8...v2.0.0-beta.9) (2021-03-10)
+
+
+### Bug Fixes
+
+* library release fix, eslint refactor, update readme ([8cfbbdc](https://github.com/ngneat/lib/commit/8cfbbdca67887e626bc113f338f0478538f70a34))
+
 # [2.0.0-beta.8](https://github.com/ngneat/lib/compare/v2.0.0-beta.7...v2.0.0-beta.8) (2021-03-09)
 
 
