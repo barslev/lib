@@ -1,3 +1,10 @@
+# [2.1.0-beta.1](https://github.com/ngneat/lib/compare/v2.0.0...v2.1.0-beta.1) (2021-06-15)
+
+
+### Features
+
+* add support for v12 ([c7f9d5b](https://github.com/ngneat/lib/commit/c7f9d5b780155f33fec1b19d951fc7542aceb3cd)), closes [#24](https://github.com/ngneat/lib/issues/24)
+
 # [2.0.0](https://github.com/ngneat/lib/compare/v1.0.4...v2.0.0) (2021-03-10)
 
 
