@@ -38,7 +38,7 @@ const appOptions: ApplicationOptions = {
   skipPackageJson: false,
 };
 
-const defaultOptions: Schema = {
+const defaultOptions: Partial<Schema> = {
   name: scopeWithName,
   ci: "github-actions",
   skipAngularCliGhPages: true,
@@ -78,7 +78,6 @@ const libWOSchematicsResultFiles = [
   "/projects/scope/toaster/tsconfig.lib.json",
   "/projects/scope/toaster/tsconfig.lib.prod.json",
   "/projects/scope/toaster/tsconfig.spec.json",
-  "/projects/scope/toaster/tslint.json",
   "/projects/scope/toaster/src/test.ts",
   "/projects/scope/toaster/src/public-api.ts",
   "/projects/scope/toaster/src/lib/toaster.module.ts",
@@ -122,7 +121,7 @@ describe("ng-add", () => {
     });
 
     it("works", async () => {
-      const options: Schema = { ...defaultOptions };
+      const options = { ...defaultOptions };
       const tree: UnitTestTree = await schematicRunner
         .runSchematicAsync("ng-add", options, appTree)
         .toPromise();
@@ -140,7 +139,7 @@ describe("ng-add", () => {
         )
         .toPromise();
 
-      const options: Schema = { ...defaultOptions, skipLib: true };
+      const options = { ...defaultOptions, skipLib: true };
       const tree: UnitTestTree = await schematicRunner
         .runSchematicAsync("ng-add", options, appTreeWithLib)
         .toPromise();
@@ -149,7 +148,7 @@ describe("ng-add", () => {
     });
 
     it("works with skipSchematics=true", async () => {
-      const options: Schema = { ...defaultOptions, skipSchematics: true };
+      const options = { ...defaultOptions, skipSchematics: true };
       const tree: UnitTestTree = await schematicRunner
         .runSchematicAsync("ng-add", options, appTree)
         .toPromise();
@@ -189,7 +188,7 @@ describe("ng-add", () => {
     });
 
     it("fails with skipLib=true for missing lib", (done) => {
-      const options: Schema = { ...defaultOptions, skipLib: true };
+      const options = { ...defaultOptions, skipLib: true };
 
       schematicRunner.runSchematicAsync("ng-add", options, appTree).subscribe({
         error: (err) => {
