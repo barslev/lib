@@ -1,17 +1,17 @@
 import { Tree } from "@angular-devkit/schematics";
 import {
   SchematicTestRunner,
-  UnitTestTree,
+  UnitTestTree
 } from "@angular-devkit/schematics/testing";
-import { Schema as WorkspaceOptions } from "@schematics/angular/workspace/schema";
 import {
   Schema as ApplicationOptions,
-  Style,
+  Style
 } from "@schematics/angular/application/schema";
+import { Schema as WorkspaceOptions } from "@schematics/angular/workspace/schema";
 import * as path from "path";
-
-import { Schema } from "../lib/schema";
 import { Schema as CreateSchematicsOptions } from "../lib/create-schematics/schema";
+import { Schema } from "../lib/schema";
+
 
 const collectionPath = path.join(__dirname, "../collection.json");
 
@@ -88,11 +88,11 @@ const libWOSchematicsResultFiles = [
   "/CODE_OF_CONDUCT.md",
   "/commitlint.config.js",
   "/CONTRIBUTING.md",
-  "/ISSUE_TEMPLATE.md",
   "/LICENSE",
   "/logo.svg",
-  "/PULL_REQUEST_TEMPLATE.md",
   "/hooks/pre-commit.js",
+  "/.github/ISSUE_TEMPLATE.md",
+  "/.github/PULL_REQUEST_TEMPLATE.md",
   "/.github/workflows/release.yml",
   "/.github/workflows/deploy.yml",
 ];
