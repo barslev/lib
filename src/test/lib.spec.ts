@@ -1,17 +1,16 @@
 import { Tree } from "@angular-devkit/schematics";
 import {
   SchematicTestRunner,
-  UnitTestTree
+  UnitTestTree,
 } from "@angular-devkit/schematics/testing";
 import {
   Schema as ApplicationOptions,
-  Style
+  Style,
 } from "@schematics/angular/application/schema";
 import { Schema as WorkspaceOptions } from "@schematics/angular/workspace/schema";
 import * as path from "path";
 import { Schema as CreateSchematicsOptions } from "../lib/create-schematics/schema";
 import { Schema } from "../lib/schema";
-
 
 const collectionPath = path.join(__dirname, "../collection.json");
 
@@ -78,7 +77,6 @@ const libWOSchematicsResultFiles = [
   "/projects/scope/toaster/tsconfig.lib.json",
   "/projects/scope/toaster/tsconfig.lib.prod.json",
   "/projects/scope/toaster/tsconfig.spec.json",
-  "/projects/scope/toaster/tslint.json",
   "/projects/scope/toaster/src/test.ts",
   "/projects/scope/toaster/src/public-api.ts",
   "/projects/scope/toaster/src/lib/toaster.module.ts",
