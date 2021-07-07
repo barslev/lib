@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/ngneat/lib/compare/v2.0.0...v2.0.1) (2021-07-07)
+
+
+### Bug Fixes
+
+* add commitizen ad devDependency ([5200d4c](https://github.com/ngneat/lib/commit/5200d4c23c6a1c9263c3ab7baa22675af2018229)), closes [#26](https://github.com/ngneat/lib/issues/26)
+
 ## [2.0.1-alpha.1](https://github.com/ngneat/lib/compare/v2.0.0...v2.0.1-alpha.1) (2021-07-07)
 
 
