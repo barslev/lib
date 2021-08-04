@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/ngneat/lib/compare/v2.0.1...v3.0.0) (2021-08-04)
+
+
+### Features
+
+* upgrade to v12 ([4834546](https://github.com/ngneat/lib/commit/4834546d7748fdd2f4bd5f4123541a8864be762e)), closes [#24](https://github.com/ngneat/lib/issues/24)
+
+
+### BREAKING CHANGES
+
+* Support angular v12
+
 # [3.0.0-beta.1](https://github.com/ngneat/lib/compare/v2.0.1...v3.0.0-beta.1) (2021-08-04)
 
 
