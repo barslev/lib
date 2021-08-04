@@ -70,8 +70,8 @@ ng add @ngneat/lib @scope/toaster # change @scope/toaster with your lib name
 
 | Angular | @ngneat/lib |
 | ------- | ----------- |
-| v12     | 4.x.x       |
-| v11     | 3.x.x       |
+| v12     | 3.x.x       |
+| v11     | 2.x.x       |
 
 ## Usage
 
