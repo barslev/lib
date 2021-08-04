@@ -147,7 +147,6 @@ export function createLib(
     isNx ? "@nrwl/angular" : "@schematics/angular",
     "library",
     {
-      ...(!isNx && options),
       name: scopeWithName,
     }
   );

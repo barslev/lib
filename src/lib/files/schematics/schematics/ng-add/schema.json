@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "<%= classify(name) %>Schematics",
+  "$id": "<%= classify(name) %>Schematics",
   "title": "<%= classify(name) %> ng-add schematic",
   "type": "object",
   "properties": {
