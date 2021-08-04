@@ -35,6 +35,7 @@ ng add @ngneat/lib @scope/toaster # change @scope/toaster with your lib name
 
 ## Table of Content <!-- omit in toc -->
 
+- [Version](#version)
 - [Usage](#usage)
   - [Create library with schematics](#create-library-with-schematics)
   - [Generate schematics in existing library](#generate-schematics-in-existing-library)
@@ -64,6 +65,13 @@ ng add @ngneat/lib @scope/toaster # change @scope/toaster with your lib name
 - [Extras](#extras)
 - [Badge](#badge)
 - [Contributors ✨](#contributors-)
+
+## Version
+
+| Angular | @ngneat/lib |
+| ------- | ----------- |
+| v12     | 4.x.x       |
+| v11     | 3.x.x       |
 
 ## Usage
 
