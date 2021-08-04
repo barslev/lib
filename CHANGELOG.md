@@ -1,3 +1,10 @@
+# [2.1.0-beta.2](https://github.com/ngneat/lib/compare/v2.1.0-beta.1...v2.1.0-beta.2) (2021-08-04)
+
+
+### Features
+
+* update @ngneat/lib to 8.0.2 ([2012aea](https://github.com/ngneat/lib/commit/2012aeae3efc1bc5b05c46961ff5aa9c187f77a9)), closes [#24](https://github.com/ngneat/lib/issues/24)
+
 # [2.1.0-beta.1](https://github.com/ngneat/lib/compare/v2.0.0...v2.1.0-beta.1) (2021-06-15)
 
 
