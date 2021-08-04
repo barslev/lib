@@ -3,14 +3,15 @@ import {
   SchematicTestRunner,
   UnitTestTree,
 } from "@angular-devkit/schematics/testing";
+import { Schema as WorkspaceOptions } from "@schematics/angular/workspace/schema";
 import {
   Schema as ApplicationOptions,
   Style,
 } from "@schematics/angular/application/schema";
-import { Schema as WorkspaceOptions } from "@schematics/angular/workspace/schema";
 import * as path from "path";
-import { Schema as CreateSchematicsOptions } from "../lib/create-schematics/schema";
+
 import { Schema } from "../lib/schema";
+import { Schema as CreateSchematicsOptions } from "../lib/create-schematics/schema";
 
 const collectionPath = path.join(__dirname, "../collection.json");
 
@@ -37,7 +38,7 @@ const appOptions: ApplicationOptions = {
   skipPackageJson: false,
 };
 
-const defaultOptions: Schema = {
+const defaultOptions: Partial<Schema> = {
   name: scopeWithName,
   ci: "github-actions",
   skipAngularCliGhPages: true,
@@ -86,11 +87,11 @@ const libWOSchematicsResultFiles = [
   "/CODE_OF_CONDUCT.md",
   "/commitlint.config.js",
   "/CONTRIBUTING.md",
+  "/ISSUE_TEMPLATE.md",
   "/LICENSE",
   "/logo.svg",
+  "/PULL_REQUEST_TEMPLATE.md",
   "/hooks/pre-commit.js",
-  "/.github/ISSUE_TEMPLATE.md",
-  "/.github/PULL_REQUEST_TEMPLATE.md",
   "/.github/workflows/release.yml",
   "/.github/workflows/deploy.yml",
 ];
@@ -120,7 +121,7 @@ describe("ng-add", () => {
     });
 
     it("works", async () => {
-      const options: Schema = { ...defaultOptions };
+      const options = { ...defaultOptions };
       const tree: UnitTestTree = await schematicRunner
         .runSchematicAsync("ng-add", options, appTree)
         .toPromise();
@@ -138,7 +139,7 @@ describe("ng-add", () => {
         )
         .toPromise();
 
-      const options: Schema = { ...defaultOptions, skipLib: true };
+      const options = { ...defaultOptions, skipLib: true };
       const tree: UnitTestTree = await schematicRunner
         .runSchematicAsync("ng-add", options, appTreeWithLib)
         .toPromise();
@@ -147,7 +148,7 @@ describe("ng-add", () => {
     });
 
     it("works with skipSchematics=true", async () => {
-      const options: Schema = { ...defaultOptions, skipSchematics: true };
+      const options = { ...defaultOptions, skipSchematics: true };
       const tree: UnitTestTree = await schematicRunner
         .runSchematicAsync("ng-add", options, appTree)
         .toPromise();
@@ -187,7 +188,7 @@ describe("ng-add", () => {
     });
 
     it("fails with skipLib=true for missing lib", (done) => {
-      const options: Schema = { ...defaultOptions, skipLib: true };
+      const options = { ...defaultOptions, skipLib: true };
 
       schematicRunner.runSchematicAsync("ng-add", options, appTree).subscribe({
         error: (err) => {

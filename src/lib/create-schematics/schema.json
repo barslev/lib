@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsLibrary",
+  "$id": "SchematicsLibrary",
   "title": "Library Options Schema",
   "type": "object",
   "description": "Generate a schematics in the library project.",
