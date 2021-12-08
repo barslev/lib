@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/ngneat/lib/compare/v3.0.0...v3.0.1) (2021-12-08)
+
+
+### Bug Fixes
+
+* ask user for Code of Conduct email ([172057f](https://github.com/ngneat/lib/commit/172057f44607dd610db5d35e742a58e00f994191)), closes [#31](https://github.com/ngneat/lib/issues/31)
+
 # [3.0.0](https://github.com/ngneat/lib/compare/v2.0.1...v3.0.0) (2021-08-04)
 
 
