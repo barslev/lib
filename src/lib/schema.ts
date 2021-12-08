@@ -61,6 +61,10 @@ export interface Schema {
    */
   botEmail?: string;
   /**
+   * This email will be used in Code of Conduct
+   */
+  cocEmail?: string;
+  /**
    * When true, does not add @ngneat/spectator
    */
   skipSpectator: boolean;
