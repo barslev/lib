@@ -85,6 +85,12 @@
       "description": "This email will be used while deploying on GitHub Pages",
       "x-prompt": "What email should we use for deploying on GitHub Pages?"
     },
+    "cocEmail": {
+      "type": "string",
+      "default": "",
+      "description": "This email will be used in Code of Conduct",
+      "x-prompt": "What email should we use for Code of Conduct?"
+    },
     "skipSpectator": {
       "type": "boolean",
       "default": false,
