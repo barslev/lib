@@ -190,7 +190,7 @@ Simply run `npm run commit` each time you when you commit. And answer the prompt
 
 #### Secrets and tokens
 
-You will need to create `NPM_TOKEN` and `GH_TOKEN` tokens for `semantic-release` and `angular-cli-ghpages` to work perfectly. Read more [here](https:/ semantic-release.gitbook.io/semantic-release/usage/ci-configuration#authentication-for-plugins) .
+You will need to create `NPM_TOKEN` and `GH_TOKEN` tokens for `semantic-release` and `angular-cli-ghpages` to work perfectly. Read more [here](https://semantic-release.gitbook.io/semantic-release/usage/ci-configuration#authentication-for-plugins) .
 
 #### Initial release
 
